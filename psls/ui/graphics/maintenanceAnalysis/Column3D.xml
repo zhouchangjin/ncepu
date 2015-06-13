@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gbk"?>
+<chart caption='计划下达年度统计' xAxisName='月份' yAxisName='数量' showValues='0' decimals='0' formatNumberScale='0'>
+<set label="一月" value='5' />
+<set label='二月' value='10' />
+<set label='三月' value='13' />
+<set label='四月' value='15' />
+<set label='五月' value='20' />
+<set label='六月' value='5' />
+<set label='七月' value='15' />
+<set label='八月' value='15' />
+<set label='九月' value='15' />
+<set label='十月' value='15' />
+<set label='十一月' value='15' />
+<set label='十二月' value='15' />
+</chart>	

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu xmlns="http://www.example.org/menu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/menu menu.xsd ">
+	<Module title="计划作业管理">
+		<Item id="11" item="plan_into_c" module="work_manage" title="计划作业管理">
+		</Item>
+		<Item id="12" item="kancha_detail_c" module="work_manage" title="勘查信息管理">
+		</Item>
+		<Item id="13" item="plan_audit_c" module="audit" title="作业文件审批">
+		</Item>
+	</Module>
+	<Module title="故障作业管理">
+		<Item id="21" item="fault_into_c" module="fault_manage" title="故障作业导入">
+		</Item>
+		<Item id="22" item="fault_ready_c" module="fault_manage" title="作业准备">
+		</Item>
+		<Item id="23" item="fault_approval_c" module="fault_manage" title="故障作业审批">
+		</Item>
+	</Module>
+	<Module title="临时作业管理">
+		<Item id="31" item="temporary_into_c" module="temporary_manage" title="临时作业导入">
+		</Item>
+		<Item id="32" item="temporary_ready_c" module="temporary_manage" title="作业准备">
+		</Item>
+		<Item id="33" item="temporary_approval_c" module="temporary_manage" title="临时作业审批">
+		</Item>
+	</Module>
+	<Module title="作业数据统计分析">
+		<Item item="plan_data_query_c" module="plan_data" id="41" title="作业数据查询" >
+		</Item>
+		<Item item="plan_data_count_c" module="plan_data" id="42" title="作业数据统计" >
+		</Item>
+	</Module>
+	<Module title="规程制度管理">
+		<Item item="rules_c" module="rules_manage" id="51" title="规程制度管理" >
+		</Item>
+	</Module>
+	<Module title="知识库管理">
+		<Item item="work_type_c/index" module="knowledge_base" id="61" title="作业类型管理" >
+		</Item>
+		<Item item="materials_c" module="knowledge_base" id="62" title="材料管理" >
+		</Item>
+		<Item item="tool_c" module="knowledge_base" id="63" title="工器具管理" >
+		</Item>
+		<Item item="work_way_c" module="knowledge_base" id="64" title="施工方法管理" >
+		</Item>
+		<Item item="critical_activity_c" module="knowledge_base" id="65" title="关键工序管理" >
+		</Item>
+		<Item item="safety_measure_c" module="knowledge_base" id="66" title="风险-控制措施管理" >
+		</Item>
+	</Module>
+	<Module title="人员资质备案">
+		<Item item="qualification_c" module="qualification_manage" id="71" title="人员资质管理" >
+		</Item>
+	</Module>
+	<Module title="实时监控">
+		<Item item="Monitor_c" module="staff_manage" id="81" title="作业过程监控" >
+		</Item>
+		<Item item="staff_manage_c/signature" module="staff_manage" id="82" title="历史签名记录查询" >
+		</Item>
+	</Module>
+	<Module title="系统管理">
+		<Item item="tt_user_c" module="sys_manage" id="91" title="用户管理">
+		</Item>
+		<Item item="department_info_c" module="sys_manage" id="92" title="公司管理">
+		</Item>
+		<Item item="dept_c" module="sys_manage" id="93" title="部门类型管理">
+		</Item>
+		<Item item="role_info_c" module="sys_manage" id="94" title="角色管理">
+		</Item>
+		<Item item="powersupply_unit_c" module="sys_manage" id="95" title="供电所管理">
+		</Item>
+		<Item item="transformer_substation_c" module="sys_manage" id="96" title="变电站管理">
+		</Item>
+	</Module>
+</Menu>

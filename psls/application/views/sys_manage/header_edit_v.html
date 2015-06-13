@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+    </style>
+    <script>
+
+    var user_id="{*$user->getId()*}";
+    var user_name="{*$user->getName()*}";
+    var id="{*$id*}";
+    $(function() {
+          
+     });
+    
+    function save(){
+		var input_title= $("#title").val();
+		var input_gonggao= $("#gonggao").val();
+		var url='/psls/sys_manage/header_c/update/'+id;
+    	$.post(url,{
+			title:input_title,
+			gonggao:input_gonggao,
+		},function(data){
+
+    	});
+    }
+    
+    </script>
+</head>
+<body>
+<table cellpadding=8>
+<tr><td align="right"><tr><td align="right">新闻标题:</td><td><input id='title' style='width:200px;' name='title' value='{*$obj['title']*}' type='text'/></td></tr>
+<tr><td align="right">安全方针:</td><td><textarea id='gonggao' style='width:350px;height:200px' name='gonggao'>{*$obj['gonggao']*}</textarea></td></tr>
+</table>
+</body>
+</html>

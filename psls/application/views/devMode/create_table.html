@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+     <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp2.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+      .contextinfo{
+      	font-size:14px;
+      }
+      .contextinfo .label{
+        color:rgb(247,146,0);
+        font-weight:bold;
+        width:100px
+      }
+      
+    </style>
+    <script>
+        var i=0;
+        function test(){
+        	var opts="<option value='varchar'>名称(varchar)</option><option value='text'>大段文字(text)</option><option value='timestamps'>日期(timestamps)</option><option value='bigint'>关联表</option>";
+        	opts+="<option value='double'>小数</option><option value='int'>整数</option>";
+        	var select="<select id='colt_"+i+"' class='coltype'>"+opts+"</select>";
+        	var html="<tr><td>列名：<input class='col' id='col_"+i+"' type='text'/></td><td>类型："+select+"</td></tr>";
+        	i++;
+        	$('#tbl').append(html);
+        }
+    	function generate(){
+    		var tbl_name=$('#tb_name').val();
+    		var colsql="";
+    		$('.col').each(function(){
+    			var col_name=$(this).val();
+    		});
+    		var sql="CREATE TABLE `"+tbl_name+"` ( `id` bigint(20) NOT NULL AUTO_INCREMENT,`cdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,"+colsql+",PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;";
+    	}
+    </script>
+    </head>
+    <body>
+    <table id="tbl">
+    <tr><td><button onclick="test()">添加一列</button></td><td><button onclick="generate()">生成</button><button onclick="save()">保存</button></td></tr>
+    <tr><td width=300>表名</td><td><input name="tb_name" type="text"/></td></tr>
+   	<tr><td width=300>主键列</td><td>id</td></tr> 
+    <tr><td width=300>创建日期</td><td>cdate</td></tr> 
+    </table>
+    
+    </body>
+    </html>

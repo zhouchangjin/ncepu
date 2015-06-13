@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link href="/psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet"></link>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript" src="/psls/ui/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js">
+    </script>
+<script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.js"></script>
+<style>
+  .table-center td {
+    text-align: center;
+  }
+  .table-center input {
+    height: 30px;
+    margin-bottom: 0;
+  }
+</style>
+<script>
+function goback () {
+  window.frameElement.contentWindow.history.go(-1);
+}
+$().ready(function() {    
+    var mesg=$("#message").val();
+    //登录人权限与展示内容的关系：权限2->计划状态1，权限3->计划状态2
+    if(mesg){       
+        alert(mesg);
+    };
+});
+</script>
+</head>
+<body>
+<div class="well" style="margin-top: 10px;width:70%;margin-left:50px;margin-right:10px;"> 
+  <lable>临时授权</lable>
+  <button class="btn pull-right"  name="goback" onclick="goback()"> 返回 </button>     
+</div>
+<form method="post"  action="/psls/staff_manage/temporaryRightConfer_c/rightConfer">
+	<table name="father" id="father" style="width:80%;margin-top:20px;margin-left:50px;margin-right:10px;margin-bottom:10px;" class="table table-bordered table-center">
+		<tr>
+		<input type="hidden" id="message" value="{*$message*}"/>
+			<td>接收权限的人员</td>
+			<td>				
+					<select name="rightReciever" id="rightReciever">	
+					<option value="">请选择人员</option>					
+						{*foreach $lowerStaff as $key => $value*}			  
+				  				<option value="{*$value['id']*}">{*$value['name']*}</option>		  
+						{*/foreach*}
+					</select>						
+			</td>
+		</tr>
+		<tr>
+			<td>我的权限</td>
+			<td>
+				<table name="child2" id="child2" style="width:100%">
+				{*foreach $selfRoleRight as $key => $value*}
+				  {*if $key%4==0*}
+				  <tr>
+				  	<td><input type="radio" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  {*else if $key%4==3*}
+				  <td><input type="radio" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  </tr>
+				  {*else*}
+				  <td><input type="radio" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  {*/if*}				  
+				{*/foreach*}
+				{*assign var="i" value=4-count($selfRoleRight)%4*}				
+				 {*foreach $i as $col*}
+				<td></td>
+				{*/foreach*}
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<tr><td colspan="2"><input type="submit" name="submit" value="授权"/></td></tr>
+	</table>
+</form>
+
+</body>
+</html>

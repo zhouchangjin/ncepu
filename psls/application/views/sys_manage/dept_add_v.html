@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+    </style>
+    <script>
+
+    var user_id="{*$user->getId()*}";
+    var user_name="{*$user->getName()*}";
+    
+    $(function() {
+          
+     });
+    
+    function save(){
+		var input_name= $("#name").val();
+		var input_description= $("#description").val();   
+		var url='/psls/sys_manage/dept_c/add';
+    	$.post(url,{
+				name:input_name,
+				description:input_description    	
+		},function(data){
+
+    	});
+    }
+    
+    </script>
+</head>
+<body>
+<table cellpadding=8>
+<tr><td align="right">部门名称:</td><td><input id='name' style='width:300px;' name='name' type='text'/></td></tr>
+<tr><td align="right">部门描述:</td><td><textarea id='description' style='width:300px;height:200px' name='description'></textarea></td></tr>
+</table>
+</body>
+</html>

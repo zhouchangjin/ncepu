@@ -1,0 +1,403 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>配电网在线式精益化管理系统</title>
+  <link rel="shortcut icon" href="/psls/ui/img/icon/book.ico">
+  <link href="../../../psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico:400' rel='stylesheet' type='text/css'>
+  <link href='/psls/ui/css/onepage-scroll.css' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/psls/ui/js/jquery.onepage-scroll.js"></script>
+  <script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.js"></script>
+
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      background: #E2E4E7;
+      padding: 0;
+      text-align: center;
+      font-family: 'open sans';
+      position: relative;
+      margin: 0;
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .wrapper {
+    	height: 100% !important;
+    	height: 100%;
+    	margin: 0 auto; 
+    	overflow: hidden;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+    
+    
+    h1, h2 {
+      width: 100%;
+      float: left;
+    }
+    h1 {
+      margin-top: 100px;
+      color: #000;
+      margin-bottom: 5px;
+      font-size: 70px;
+      letter-spacing: -4px;
+      font-weight: 100;
+    }
+    h1 span {
+      font-size: 26px;
+      margin: 0 5px;
+      text-transform: capitalize;
+      background: rgba(0,0,0,0.85);
+      display: inline-block;
+      color: #6D461D;
+      border-radius: 5px 5px;
+      -webkit-border-radius: 5px 5px;
+      -moz-border-radius: 5px 5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+      padding: 3px 10px;
+    }
+    h2 {
+      color: #6D461D;
+      font-weight: 100;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .pointer {
+      color: #9b59b6;
+      font-family: 'Pacifico', cursive;
+      font-size: 30px;
+      margin-top: 15px;
+    }
+    code {
+      margin: 20px 1%;
+      float: left;
+      width: 48%;
+      height: 105px;
+      background: rgba(0,0,0,0.1);
+      border: rgba(0,0,0,0.05) 5px solid;
+      border-radius: 5px;
+      padding:5px;
+      color: white;
+      text-align: center;
+      font-size: 15px;
+      margin-top: 25px;
+      display: block;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+    code.html {
+      color: #7EC9E6;
+    }
+    code.js {
+      color: #FFAD00;
+    }
+
+    .main {
+      float: left;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .main h1 {
+      padding:150px 50px;
+      float: left;
+      width: 100%;
+      font-size: 45px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      font-weight: 100;
+      color: white;
+      margin: 0;
+    }
+   
+    .main h1.demo1 {
+      background: #1ABC9C;
+    }
+    
+    .reload.bell {
+      font-size: 12px;
+      padding: 20px;
+      width: 45px;
+      text-align: center;
+      height: 47px;
+      border-radius: 50px;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+    }
+    
+    .reload.bell #notification {
+      font-size: 25px;
+      line-height: 140%;
+    }
+
+    .reload:hover{
+      background: #444;
+    }
+  
+    .clear {
+      width: auto;
+    }
+    .credit {
+      text-align: center;
+      color: rgba(0,0,0,0.5);
+      padding: 10px;
+      width: 410px;
+      clear: both;
+    }
+    .credit a {
+      color: rgba(0,0,0,0.85);
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: center;
+      display: block;
+      padding: 7px;
+      width: 100%;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.25);
+      font-weight: bold;
+      font-size: 13px;
+      color: #000;
+      -webkit-transition: all 500ms ease-in-out;
+      -moz-transition: all 500ms ease-in-out;
+      -o-transition: all 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
+    }
+    .back:hover {
+      color: black;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    
+    header {
+      position: relative;
+      z-index: 10;
+    }
+    .main section .page_container {
+      position: relative;
+      top: 25%;
+      margin: 0 auto 0;
+      max-width: 950px;
+      z-index: 3;
+    }
+    .main section  {
+      overflow: hidden;
+    }
+    
+    .main section > img {
+      position: absolute;
+      max-width: 100%;
+      z-index: 1;
+    }
+
+    .main section.page1 {
+      /*background: #FFFFFF;*/
+      background: url("../../../psls/ui/img/11.jpg") no-repeat center center;
+    }
+    .main section.page1 h1 {
+      text-align: center;
+      padding: 0;
+      margin-top: 40px;
+      font-size: 50px;
+      color: black;
+    }
+    
+    .main section.page2 {
+      /*background:rgb(230, 217, 200);*/
+      background: rgb(230, 217, 200) url(/psls/ui/img/ipad.png) no-repeat 600px 0px;
+    }
+    .main section.page2 h1 {
+      text-align: left;
+      padding: 0;
+      margin-bottom: 15px;
+	  margin-left: -70px;
+      font-size: 40px;
+      color: black;
+    }
+    .main section.page2 h2 {
+      color: rgba(0,0,0,0.85);
+      text-align: left;
+      width: 435px;
+      line-height: 160%;
+	  font-size: 20px;
+    }
+
+    .main section.page3 {
+      background: #555557 url(/psls/ui/img/imac.png) no-repeat center -50px ;
+    }
+    .main section.page3 > img {
+      position: absolute;
+      top: -300px;
+      left: 50%;
+      margin-left: -1095px;
+    }
+    .main section.page3 .page_container {
+      margin-top: 360px;
+      overflow: hidden;
+    }
+    .main section.page3 h1 {
+      text-align: center;
+      padding: 0;
+      margin-bottom: 15px;
+      font-size: 40px;
+      letter-spacing: -1px;
+      color: white;
+    }
+    .main section.page3 h2 {
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      line-height: 160%;
+      font-weight: 100;
+    }
+    .viewing-page-3 .back{
+      background: rgba(0, 0, 0, 0.25);
+      color: #FFF;
+      }
+    .main section.page4 {
+      background:url(/psls/ui/img/tilted-phone.png) no-repeat 156px -150px ;
+    }
+    .main section.page4 .page_container {
+      overflow: hidden;
+      width: 500px;
+      right: -285px;
+    }
+    .main section.page4 h1 {
+      text-align: left;
+      padding: 0;
+      margin-bottom: 0;
+      font-size: 50px;
+      letter-spacing: -1px;
+      color: black;
+    }
+    .main section.page4 h2 {
+      color: rgba(0,0,0,0.85);
+      text-align: left;
+      line-height: 160%;
+      font-weight: 100;
+      font-size: 21px;
+    }
+	</style>
+	<script>
+	  $(document).ready(function(){
+      $(".main").onepage_scroll({
+        sectionContainer: "section"
+      });
+		});
+		
+	</script>
+
+  <style type="text/css">
+  input {
+   border-top: none;
+   border-right: none;
+   border-bottom: 1px solid #000;<!--下边框是一条2像素宽黑色实线-->
+   border-left: none;
+   width: 100%;<!--框框的宽度-->
+}
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+	  <div class="main">
+
+      <section class="page1">
+        <div id="page_container">
+          
+          <ul class="nav nav-tabs" style="text-align:center;margin-top:3%">
+              <font size="15" color="white" face="微软雅黑">配电网在线式精益化管理系统</font>
+          </ul>
+          
+
+          <div class="container">
+            <br><br><br><br><br>
+            <form class="form-horizontal" role="form" action="/psls/login/user_login" method="post">
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 col-sm-offset-2 control-label"><span class="glyphicon glyphicon-user"></span>用户名</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" name="username" id="inputEmail3" placeholder="用户名">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 col-sm-offset-2 control-label"><span class="glyphicon glyphicon-lock"></span> 密码</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" name="password" id="inputPassword3" placeholder="密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-6" >
+                  <button type="submit" class="btn btn-primary btn-large">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;&nbsp;登 &nbsp;陆&nbsp;&nbsp;&nbsp;
+                  </button>
+                  <button class="btn btn-default btn-large">
+                    &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp; 重&nbsp;置&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
+              </div>
+            </form>
+            <br><br><br><br><br><br><br><br><br><br>
+            <div><p><font color="#fff">Copyright  2014 </font><a href="http://www.ncepu.edu.cn/"><font color="#fff">North China Electric Power University</font></a></p></div>
+                
+          </div>
+        </div>
+        
+      </section>
+	    
+      <section class="page2">
+        <div class="page_container">
+          <h1>配电网在线式精益化管理系统 移动端</h1>
+          <h2>
+		  <br><br>强大的图像处理功能，满足现场作业需求
+		  <br><br>先进的WiFi/4G网络通信，实现实时办公
+		  <br><br>符合iOS7的UI设计</h2>
+          <!--<p class="credit">Created by <a href="">黄 春佑</a>, <a href="" target="_blank">吴 莹辉</a></p>-->
+		  <p></p>
+  	    </div>
+      </section>
+	    
+	    <section class="page3">
+	      <div class="page_container">
+          <h1>配电网在线式精益化管理系统 PC端</h1>
+          <h2></h2><h2></h2>
+		  <h2>规范、精益、智能</h2>
+	      </div>
+      </section>
+	    
+	    <section class="page4">
+	      <div class="page_container">
+          <h1>开发团队</h1>
+          <h2>
+    		  <br><strong>项目负责人：</strong>申晓留 教授
+    		  <br><strong>Ipad端负责人：</strong>吴莹辉
+    		  <br><strong>PC端负责人：</strong>黄春佑
+    		  <br><strong>项目组成员：</strong>黄春佑，吴莹辉，白冰洁，张九铭，何博，黄博文，孙杨博，迟俊琳
+          <br>
+          <br><a href="/psls/login/timeline" target="_blank">开发日志</a>
+    		  </h2>
+  	    </div>
+      </section>
+      
+    </div>
+
+  </div>
+<div style="text-align:center;clear:both">
+</div>
+</body>
+</html>

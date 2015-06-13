@@ -1,0 +1,5 @@
+RewriteEngine on   
+
+RewriteCond $1 !^(admin|index\.php|images|robots\.txt)   
+
+RewriteRule ^(.*)$ /psls/index.php/$1 [L]

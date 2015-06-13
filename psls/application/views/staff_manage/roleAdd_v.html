@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link href="/psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet"></link>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript" src="/psls/ui/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js">
+    </script>
+<script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.js"></script>
+<style>
+  .table-center td {
+    text-align: center;
+  }
+  .table-center input {
+    height: 30px;
+    margin-bottom: 0;
+  }
+</style>
+<script>
+function goback () {
+  window.frameElement.contentWindow.history.go(-1);
+}
+$().ready(function() {    
+	$.post("/psls/staff_manage/Staff_manage_c/getDepartmentAjax",
+			  {},
+			  function(data,status){	
+				 $("#department").append(data);				 
+			  });
+    var mesg=$("#message").val();
+    //登录人权限与展示内容的关系：权限2->计划状态1，权限3->计划状态2
+    if(mesg){       
+        alert(mesg);
+    };
+});
+</script>
+</head>
+<body>
+<div class="well" style="margin-top: 10px;width:70%;margin-left:50px;margin-right:10px;"> 
+  <lable>新增岗位</lable>
+  <button class="btn pull-right"  name="goback" onclick="goback()"> 返回 </button>     
+</div>
+<form method="post"  action="/psls/staff_manage/Role_Manage_c/addSave">
+	<table name="father" id="father" style="width:80%;margin-top:20px;margin-left:50px;margin-right:10px;margin-bottom:10px;" class="table table-bordered table-center">
+		<tr>
+		<input type="hidden" id="message" value="{*$message*}"/>
+			<td>新增岗位名称</td>
+			<td>				
+				<input type="text" name="roleName"/>					
+			</td>
+			<td>
+			   所处部门
+			</td>
+			<td>
+			<select id="department" name="department">
+				<option value="">请选择部门</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>权限授予</td>
+			<td colspan="3">			
+				<table name="child2" id="child2" style="width:100%" border="0">
+				{*foreach $role as $key => $value*}
+				  {*if $key%4==0*}
+				  <tr>
+				  	<td><input type="checkbox" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  {*else if $key%4==3*}
+				  <td><input type="checkbox" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  </tr>
+				  {*else*}
+				  <td><input type="checkbox" value='{*$value['right_code']*}' id="rejected" name="right[]"/><font color="blue">{*$value['right_description']*}</font></td>
+				  {*/if*}				  
+				{*/foreach*}
+				{*assign var="i" value=4-count($role)%4*}				
+				 {*foreach $i as $col*}
+				<td></td>
+				{*/foreach*}
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<tr><td colspan="4"><input type="submit" name="submit" value="提交"/></td></tr>
+	</table>
+</form>
+
+</body>
+</html>

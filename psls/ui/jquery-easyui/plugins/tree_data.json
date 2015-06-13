@@ -1,0 +1,170 @@
+[{
+		"id":"product_plan",
+		"text":"计划管理",
+		"state":"closed",
+		"children":[{
+			"id":"windFarmPlan",
+			"text":"<a href='javascript:void(0)' id='511' ul='product_plan' li='product_plan_query_c' onclick='addTab(511)'>班组计划查看</a>"
+		},{
+		"id":"assignment",
+		"text":"<a href='javascript:void(0)' id='512' ul='product_plan' li='assignment_query_c' onclick='addTab(512)'>场计划查询</a>"
+	},{
+		"id":"planFromTop",
+		"text":"<a href='javascript:void(0)' id='513' ul='product_plan' li='assignment_query_c' onclick='addTab(513)'>安生部计划查看</a>"
+	}]
+	},
+	{
+		"id":"run_manage",
+		"text":"运行管理",
+		"state":"closed",
+		"children":[{
+			"id":"ordinary_test",
+			"text":"定期切换试验",
+			"state":"closed",
+			"children":[{
+				"id":"ordinary_test_institution",
+				"text":"<a href='javascript:void(0)' id='5211' ul='run_manage' li='ordinary_test_institution_c' onclick='addTab(5211)'>切换制度</a>"
+				},{
+				"id":"ordinary_test_project_cycle",
+				"text":"<a href='javascript:void(0)' id='5212' ul='run_manage' li='ordinary_test_project_cycle_c' onclick='addTab(5212)'>试验项目及切换周期</a>"
+				},{
+				"id":"ordinary_test_dairy",
+				"text":"<a href='javascript:void(0)' id='5213' ul='run_manage' li='ordinary_test_dairy_c' onclick='addTab(5213)'>切换试验工作日志</a>"	
+				}]
+		},{
+			"id":"basic_running_data",
+			"text":"<a href='javascript:void(0)' id='522' ul='run_manage' li='basic_running_data_c' onclick='addTab(522)'>预算申报</a>"
+		},{
+			"id":"daily_record",
+			"text":"<a href='javascript:void(0)' id='523' ul='run_manage' li='daily_record_c' onclick='addTab(523)'>运行日志</a>"
+		},{
+			"id":"indicator",
+			"text":"<a href='javascript:void(0)' id='524' ul='run_manage' li='indicator_c' onclick='addTab(524)'>指标管理</a>"
+		},{
+			"id":"ticket_manage",
+			"text":"<a href='javascript:void(0)' id='525' ul='run_manage' li='ticket_manage' onclick='addTab(525)'>两票管理</a>"
+
+		}]
+	},{
+		"id":"device_manage",
+		"text":"设备管理",
+		"state":"closed",
+		"children":[{
+			"id":"sequence_defect",
+			"text":"<a href='javascript:void(0)' id='530' ul='device_manage' li='defect_manag_c/sequence' onclick='addTab(530)'>设备缺陷管理流程图</a>"
+		},{
+			"id":"defect_manag",
+			"text":"<a href='javascript:void(0)' id='531' ul='device_manage' li='defect_manag_c/' onclick='addTab(531)'>设备缺陷管理</a>"
+		},{
+			"id":"defect_finished",
+			"text":"<a href='javascript:void(0)' id='532' ul='device_manage' li='defect_manag_c/?status=8' onclick='addTab(532)'>消缺记录查询</a>"
+		},{
+			"id":"device_log",
+			"text":"<a href='javascript:void(0)' id='533' ul='device_manage' li='device_log_c' onclick='addTab(533)'>设备台帐</a>"
+		},{
+			"id":"material_short",
+			"text":"<a href='javascript:void(0)' id='534' ul='device_manage' li='defect_manag_c/material_short/0/' onclick='addTab(534)'>备品计划审核</a>"
+		},{
+			"id":"other_reason",
+			"text":"<a href='javascript:void(0)' id='535' ul='device_manage' li='defect_manag_c/other_reason/0/' onclick='addTab(535)'>缺陷延期其他原因审核</a>"
+		}]
+	},{
+
+			"id":"mantenance_manage",
+			"text":"检修管理",
+			"state":"closed",
+			"children":[{
+				"id":"sequenceDiagram",
+				"text":"<a href='javascript:void(0)' id='540' ul='maintenance_manage' li='maintenance_manage_c/sequence' onclick='addTab(540)'>计划执行流程</a>"
+				 },{
+				"id":"normal_mantenance",
+				"text":"<a href='javascript:void(0)' id='541' ul='maintenance_manage' li='maintenance_manage_c/?status=3' onclick='addTab(541)'>未完成计划查询</a>"
+				 },{
+				"id":"",
+				"text":"<a href='javascript:void(0)' id='542' ul='maintenance_manage' li='maintenance_manage_c/?status=5' onclick='addTab(542)'>已完成计划查询</a>"
+				 },{
+				"id":"",
+				"text":"<a href='javascript:void(0)' id='545' ul='maintenance_manage' li='maintenance_manage_c/planAnalysis' onclick='addTab(545)'>检修计划完成情况统计</a>"
+			 },{
+				"id":"",
+				"text":"<a href='javascript:void(0)' id='547' ul='maintenance_manage' li='maintenance_manage_c/delay_audit' onclick='addTab(547)'>延期申请审核</a>"
+			 }]
+		},{
+
+	"id":"accident_manage",
+	"text":"安全管理",
+	"state":"closed",
+	"children":[{
+		"id":"safe_train",
+		"text":"安全培训",
+		"state":"close",
+		"children":[{
+			"id":"safe_train_plan",
+			"text":"<a href'javascript:void(0)' id='5511' ul='safty_manage' li='safty_train_plan_c' onclick='addTab(5511)'>培训计划</a>"
+			},{
+				"id":"safe_exam_database",
+				"text":"<a href'javascript:void(0)' id='5512' ul='safty_manage' li='safty_exam_database_c' onclick='addTab(5512)'>考试题库</a>"
+			},{
+				"id":"safe_train_summarise",
+				"text":"<a href'javascript:void(0)' id='5513' ul='safty_manage' li='safty_train_summarise_c' onclick='addTab(5513)'>培训总结</a>"
+
+			}]
+
+	},{
+		"id":"safe_watch",
+		"text":"<a href='javascript:void(0)' id='552' ul='safty_manage' li='safty_check_c' onclick='addTab(552)'>安全检查</a>"
+	},{
+		"id":"safe_measurement",
+		"text":"安全措施",
+		"state":"close",
+		"children":[{
+			"id":"safe_measurement_released",
+			"text":"<a href='javascript:void(0)' id='5531' ul='safty_manage' li='safty_measurement_released_c' onclick='addTab(5531)'>安全措施下达</a>"
+			},{
+				"id":"safe_measurement_execute",
+				"text":"<a href='javascript:void(0)' id='5532' ul='safty_manage' li='safty_measurement_execute_c' onclick='addTab(5532)'>安全措施执行</a>"
+			}]
+	},{
+		"id":"safe_accident_practice",
+		"text":"<a href='javascript:void(0)' id='554' ul='safty_manage' li='safty_accident_practice_c' onclick='addTab(554)'>反事故演习</a>"
+	}]
+},{
+
+	"id":"accident_manage",
+	"text":"事故管理",
+	"state":"closed",
+	"children":[{
+		"id":"accident",
+		"text":"<a href='javascript:void(0)' id='571' ul='accident_manage' li='accident_c' onclick='addTab(571)'>安全事故</a>"
+	}]
+},{
+	"id":"stock_manage",
+	"text":"库存管理",
+	"state":"closed",
+	"children":[{
+		"id":"inbound_manage",
+		"text":"<a href='javascript:void(0)' id='581' ul='stock_manage' li='inbound_manage_c' onclick='addTab(581)'>入库管理</a>"
+	},{
+		"id":"outbound_manage",
+		"text":"<a href='javascript:void(0)' id='582' ul='stock_manage' li='inventory_query_c' onclick='addTab(582)'>库存查询</a>"
+	},{
+		"id":"inventory_query",
+		"text":"<a href='javascript:void(0)' id='583' ul='stock_manage' li='outbound_manage_c' onclick='addTab(583)'>出库管理</a>"
+	}]
+},{
+	"id":"self_right",
+	"text":"授权管理",
+	"state":"closed",
+	"children":[{
+		"id":"inbound_manage",
+		"text":"<a href='javascript:void(0)' id='591' ul='staff_manage' li='temporaryRightConfer_c' onclick='addTab(591)'>临时权限授予</a>"
+	}]
+}]
+
+
+
+
+	
+
+
+

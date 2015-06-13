@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 95%;
+      }
+    </style>
+    <script>
+        var company_id,dept_id,role_id;
+        function delUser(id){
+        	$.messager.confirm('删除', '确定删除?', function(r){
+    			if (r){
+    				 var url='/psls/sys_manage/tt_user_c/deassign/';
+    				 $.post(url,{id:id},function(data){
+    					 saved();
+    				 });
+    			}
+    		});
+        }
+    	function showdeptgrid(){
+    		
+    		     	var that=this;
+    		  		while(that!=that.parent){
+    		      		that=that.parent;
+    		      	}
+    		      	var addUrl='/psls/sys_manage/department_info_c/addDeptPage/{*$id*}';
+    		      	that.showModal2(addUrl,'添加部门',saved,{
+    		      	    width:800,
+    					height:400
+    		      	});
+    		   
+    	}
+    	function showusergrid(){
+    		var that=this;
+	  		while(that!=that.parent){
+	      		that=that.parent;
+	      	}
+	      	var addUrl='/psls/sys_manage/department_info_c/assignUserPage/'+company_id+'/'+dept_id+'/'+role_id;
+	      	that.showModal2(addUrl,'添加用户',saved,{
+	      	    width:800,
+				height:400
+	      	});
+    	}
+    	
+    	function del(id){
+    		$.messager.confirm('删除', '确定删除?', function(r){
+    			if (r){
+    				 var url='/psls/sys_manage/company_dept_c/delete/'+id;
+    				 $.post(url,{id:id},function(data){
+    					 saved();
+    				 });
+    			}
+    		});
+    	}
+    	
+    	function saved(){
+    		$('#tGrid').datagrid('reload');
+    		$('#org').tree('reload');
+    	}
+    	
+    	function switch_table(e){
+    		var strlist=e.id.split("_");
+    		if(e.id=='root'){
+    			showDept();
+    			
+    		}else if(strlist.length==3){
+    			company_id=strlist[0];
+    			dept_id=strlist[1];
+    			role_id=strlist[2];
+    			showUser();
+    		}
+    	}
+    	function showUser(){
+    		showWindow=showusergrid;
+    		$('#tGrid').datagrid({
+  	           title:'用户列表',
+  	           toolbar:'#tb',
+  	           pagination:true,
+  	           url:'/psls/sys_manage/tt_user_c/grid/',
+  	           queryParams:{
+  	        	   company_id:company_id,
+  	        	   dept_id:dept_id,
+  	        	   role_id:role_id
+  	           },
+  	           columns:[
+  	        		    [
+  							{field:"name",title:"人员名称"},
+  							{field:"role_name",title:"角色"},
+  							{field:"view",title:"查看",formatter:function(a,b,c){
+  	              				return '<button class="dd btn-primary ddd" onclick="viewUser(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+  	              			}},{field:"del",title:"移除",formatter:function(a,b,c){
+  	              				return '<button class="dd btn-primary ddd" onclick="delUser(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
+  	              			}}
+  	   		         	]
+  		         		]
+  	        });
+    		
+    	}
+    	function showDept(){
+    		showWindow=showdeptgrid;
+    		$('#tGrid').datagrid({
+ 	           title:'部门列表',
+ 	           toolbar:'#tb',
+ 	           pagination:true,
+ 	           url:'/psls/sys_manage/department_info_c/deptgrid/{*$id*}',
+ 	            columns:[
+ 	        		    [
+ 							{field:"name",title:"部门名称"},
+ 							{field:"description",title:"部门描述"},
+ 							{field:"view",title:"查看",formatter:function(a,b,c){
+ 	              				return '<button class="dd btn-primary ddd"  onclick="view(\''+b.dept_id+'\',\''+b.name+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+ 	              			}},{field:"del",title:"删除",formatter:function(a,b,c){
+ 	              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
+ 	              			}}
+ 	   		         	]
+ 		         		]
+ 	        });
+    	}
+    	 function view(id,name){
+    	    	var that=this;
+    	   		while(that!=that.parent){
+    	       		that=that.parent;
+    	       	}
+    	       	var url='/psls/sys_manage/dept_c/detail/'+id;
+    	       	that.addTab2(url,name);
+    	     }
+    	
+    	
+    	var windowType="user";
+    	$(function(){
+    		$('#org').tree({
+    			url:"/psls/sys_manage/department_info_c/org/{*$id*}",
+    			animate:true,
+    			lines:true,
+    			onClick:function(e){
+    				switch_table(e);
+    			}
+    		});
+    		showDept();
+
+    	})
+    </script>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:100%">
+<div title="" data-options="region:'west',split:true" style="width:250px">
+<div class="easyui-panel" data-options="fit:true" title="公司结构" id="org">
+</div>
+
+</div>
+<div data-options="region:'center'">
+<table id="tGrid">
+</table>
+<div id="tb" style="padding:5px;height:auto">
+<div style="margin-bottom:5px">
+<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow()">添加</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+    </style>
+    <script>
+     var dictionary={*json_encode($dictionary)*};
+     function showWindow(){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var addUrl='/psls/identification/factor_c/addPage';
+      	that.showModal2(addUrl,'新建',saved,{
+      	    width:800,
+			height:400
+      	});
+     }
+      function saved(){
+    	 $('#tGrid').datagrid('reload');
+     }
+     
+     function edit(id){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/identification/factor_c/editPage/'+id;
+      	that.showModal2(url,'编辑',saved,{
+      	    width:800,
+			height:400
+      	});
+     }
+     
+     function del(id){
+     
+     	$.messager.confirm('删除', '确定删除?', function(r){
+			if (r){
+				 var url='/psls/identification/factor_c/delete/'+id;
+				 $.post(url,{id:id},function(data){
+					 $('#tGrid').datagrid('reload');
+				 });
+			}
+		});
+     
+     }
+     
+     function view(id){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/identification/factor_c/detail/'+id;
+      	that.addTab2(url,'这是标题');
+     }
+     
+     $(function() {
+        $('#tGrid').datagrid({
+           title:'认定因素',
+           toolbar:'#tb',
+           pagination:true,
+           url:'/psls/identification/factor_c/grid',
+            columns:[
+        		    [
+					{field:"id",title:"序号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["id"]["dictionary"][ b.id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.id;
+			      		
+					}},
+					{field:"student_id",title:"学号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["student_id"]["dictionary"][ b.student_id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.student_id;
+			      		
+					}},
+					{field:"children_count",title:"受教育子女数",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["children_count"]["dictionary"][ b.children_count];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.children_count;
+			      		
+					}},
+					{field:"labor_ratio",title:"劳动力人口比",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["labor_ratio"]["dictionary"][ b.labor_ratio];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.labor_ratio;
+			      		
+					}},
+					{field:"health_expense",title:"家人患重病",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["health_expense"]["dictionary"][ b.health_expense];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.health_expense;
+			      		
+					}},
+					{field:"disasters",title:"自然灾害",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["disasters"]["dictionary"][ b.disasters];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.disasters;
+			      		
+					}},
+					{field:"event",title:"突发事件",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["event"]["dictionary"][ b.event];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.event;
+			      		
+					}},
+					{field:"martyr",title:"烈士子女",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["martyr"]["dictionary"][ b.martyr];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.martyr;
+			      		
+					}},
+					{field:"poor_district",title:"老少边穷",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["poor_district"]["dictionary"][ b.poor_district];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.poor_district;
+			      		
+					}},
+					{field:"average_income",title:"人均收入",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["average_income"]["dictionary"][ b.average_income];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.average_income;
+			      		
+					}},
+					{field:"orphan",title:"事实孤儿",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["orphan"]["dictionary"][ b.orphan];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.orphan;
+			      		
+					}},
+					{field:"disabled",title:"残疾",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["disabled"]["dictionary"][ b.disabled];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.disabled;
+			      		
+					}},
+					{field:"expense",title:"月消费数据",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["expense"]["dictionary"][ b.expense];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.expense;
+			      		
+					}},
+					{field:"application_level",title:"申请等级",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["application_level"]["dictionary"][ b.application_level];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.application_level;
+			      		
+					}},
+					{field:"application_date",title:"申请日期",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["application_date"]["dictionary"][ b.application_date];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.application_date;
+			      		
+					}},
+					{field:"cdate",title:"修改日期",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["cdate"]["dictionary"][ b.cdate];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.cdate;
+			      		
+					}}
+              			,{field:"view",title:"查看",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+              			}}
+              			,{field:"edit",title:"编辑",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="edit(\''+b.id+'\')"><span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑</button>';
+              			}}
+              			,{field:"del",title:"删除",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
+              			}}
+   		         	]
+	         		]
+        });
+     });
+    </script>
+    <style type="text/css">
+     	.tabs{
+       	height: 40px;
+     	}
+	  	.tabs li a.tabs-inner{
+        	height: 40px;
+      	}
+    </style>
+</head>
+<body >
+     <table id="tGrid" style="width:800px">
+     </table>
+     
+          
+<div id="tb" style="padding:5px;height:auto">
+<div style="margin-bottom:5px">
+<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow()">新建</a>
+</div>
+</div>
+  
+</body>
+</html>

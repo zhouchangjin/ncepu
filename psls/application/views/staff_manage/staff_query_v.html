@@ -1,0 +1,111 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+   
+
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+   <link rel="stylesheet" type="text/css" href="../demo.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+  	<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+
+    <style type="text/css">
+
+    html{
+    	height:99%
+    }
+
+    body{
+    	height:99%;
+    	margin:0px;
+    	padding:0px
+    }  
+    
+    #container{
+    	height:99%
+    }  
+    
+    .layout {
+    	position: static 
+    }
+    
+    </style>  
+
+    <script type="text/javascript">
+      $(function(){
+      	  $('#org').tree({
+      	       url:"/psls/ui/org.json",
+      	       onClick:function(data){
+
+      	  
+      	       	   $('#tGrid').datagrid("load",{
+      	       	   	     department:data.id.substr(0,1), 
+      	       	         role:data.id.substr(2,1),     
+      	       	   });
+      	       }
+      	  });
+
+
+
+
+        $('#tGrid').datagrid({
+            pagination:true,
+            url:'/psls/sys_manage/tt_user_c/grid/',
+            columns:[
+        		    [	{field:"id",title:"序号"},
+        		        {field:"account",title:"姓名"},  
+        		        {field:"department_id",title:"公司名称"},
+        		        {field:"role_id",title:"部门"},
+        		        {field:"gender",title:"性别"},
+        		        {field:"pow_id",title:"权限等级"},
+        
+        		        {
+        		        	field:"xxxx",
+        		        	formatter:function(c,d){
+        		        		 url="/psls/staff_manage/Staff_manage_c/updateUser/"+d.id;
+        		        		 return "<a href='"+url+"'>修改</a>"
+        		        	},
+        		        	title:"更改权限"
+        		        }
+       	        	],
+	         		]
+        });
+
+      });
+    </script>
+    
+    </head>  
+ 	<body>  
+
+ 		<div class="easyui-layout" style="width:98%;height:98%;">
+		
+		
+		<div data-options="region:'west',split:true" title="目录" style="width:150px;">
+
+		     	<div class="easyui-panel" data-options="fit:true" style="padding:5px">
+					<ul id="org">
+	
+					</ul>
+			  </div>
+		</div>
+	   
+		<div data-options="region:'center',title:'权限控制表',iconCls:'icon-ok'">
+		   <table id="tGrid" style="width:800px">
+    		</table>
+		</div>
+
+
+	   </div>
+
+    </body>  
+    </html>
+
+
+
+
+
+
+
+

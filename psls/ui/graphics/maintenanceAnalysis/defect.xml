@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<chart bgAlpha="0" bgColor="FFFFFF" lowerLimit="0" upperLimit="100" numberSuffix="%25" showBorder="0" basefontColor="FFFFDD" chartTopMargin="25" chartBottomMargin="245" chartLeftMargin="15" chartRightMargin="25" toolTipBgColor="80A905" gaugeFillMix="{dark-10},FFFFFF,{dark-10}" gaugeFillRatio="5">
+   <colorRange>
+      <color minValue="0" maxValue="45" code="FF654F"/>
+      <color minValue="30" maxValue="70" code="F6BD0F"/>
+      <color minValue="70" maxValue="100" code="8BBA00"/>
+   </colorRange>
+
+   <dials>
+      <dial value="75" rearExtension="10"/>
+   </dials>
+
+   <trendpoints>
+      <point value="50" displayValue="Average" fontcolor="FF4400" useMarker="1" dashed="1" dashLen="2" dashGap="2" valueInside="1"/>
+   </trendpoints>
+
+   <!--Rectangles behind the gauge -->
+   <annotations>
+      <annotationGroup id="Grp1" showBelow="1">
+         <annotation type="rectangle" x="5" y="50" toX="690" toY="290" radius="10" color="009999,333333" showBorder="0"/>
+      </annotationGroup>
+   </annotations>
+
+   <styles>
+      <definition>
+         <style name="RectShadow" type="shadow" strength="3"/>
+      </definition>
+      <application>
+         <apply toObject="Grp1" styles="RectShadow"/>
+      </application>
+   </styles>
+</chart>

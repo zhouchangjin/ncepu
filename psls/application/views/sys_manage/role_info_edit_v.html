@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+      td{
+      	border-bottom:1px solid lightgrey;
+      	border-right:1px solid lightgrey;
+      	font-weight:bold;
+      }
+      table{
+      	width:95%;
+      	border:dotted 1px rgb(242,117,4)
+      }
+    </style>
+    <script>
+
+    var user_id="{*$user->getId()*}";
+    var user_name="{*$user->getName()*}";
+    var id="{*$id*}";
+    
+    function list(id,setmethod){
+    	var table=$('#'+id).attr('table');
+    	var col=$('#'+id).attr('col');
+    	var colid=$('#'+id).attr('idname');
+    	$.post('/psls/userinterface/userinterface/getList/'+table+"/"+col+"/"+colid,function(data){
+    		var json=eval('('+data+')');
+    		var html="";
+    		for(var i=0;i<json.length;i++){
+    			var item=json[i];
+    			html+="<option value='"+item[colid]+"'>"+item[col]+"</option>";
+    		}
+    		$('#'+id).html(html);
+    		setmethod();
+    	});
+    }
+    
+    $(function() {
+     });
+    
+    function save(){
+	var input_role_name= $("#role_name").val();
+	var input_role_alias= $("#role_alias").val();    	
+	var url='/psls/sys_manage/role_info_c/update/'+id;
+    	$.post(url,{
+			role_name:input_role_name,
+			role_alias:input_role_alias    	},function(data){
+
+    	});
+    }
+    
+    </script>
+</head>
+<body>
+<table cellpadding=8>
+<tr><td align="right">角色描述:</td><td><input id='role_name' style='width:200px;' name='role_name' value='{*$obj['role_name']*}' type='text'/></td></tr>
+<tr><td align="right">角色别名:</td><td><input id='role_alias' style='width:200px;' name='role_alias' value='{*$obj['role_alias']*}' type='text'/></td></tr>
+</table>
+</body>
+</html>

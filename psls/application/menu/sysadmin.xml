@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu xmlns="http://www.example.org/menu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/menu menu.xsd ">
+	<Module title="用户管理">
+		<Item item="tt_user_c" module="sys_manage" id="11" title="用户管理">
+		</Item>
+	</Module>
+	<Module title="机构管理">
+		<Item item="department_info_c" module="sys_manage" id="21" title="公司管理">
+		</Item>
+		<Item item="dept_c" module="sys_manage" id="22" title="部门类型管理">
+		</Item>
+		<Item item="role_info_c" module="sys_manage" id="23" title="角色管理">
+		</Item>
+		<Item item="powersupply_unit_c" module="sys_manage" id="24" title="供电所管理">
+		</Item>
+		<Item item="transformer_substation_c" module="sys_manage" id="25" title="变电站管理">
+		</Item>
+	</Module>
+	<Module title="信息发布">
+		<Item item="header_c" module="sys_manage" id="31" title="信息发布">
+		</Item>
+		<Item item="notification_c" module="sys_manage" id="32" title="通知发布">
+		</Item>
+		<Item item="picture_c" module="sys_manage" id="33" title="图片新闻">
+		</Item>
+	</Module>
+	<Module title="审核流程">
+		<Item item="audit_flow_c" module="audit" id="41" title="审核流程定义">
+		</Item>
+	</Module>
+	<Module title="文档管理">
+		<Item item="profession_c" module="document_information" id="51" title="专业类型管理">
+		</Item>
+		<Item item="document_c" module="document_information" id="52" title="文档类型管理">
+		</Item>
+	</Module>
+</Menu>

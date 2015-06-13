@@ -1,0 +1,419 @@
+<html style="width:98%">
+<head>
+<link href="/psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet"></link>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript" src="/psls/ui/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js">
+    </script>
+<script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.js"></script>
+<style>
+
+#department { 
+		width:30%; /*设定宽度*/ 
+		text-align:left; /*文字左对齐*/ 
+		float:left; /*浮动居左*/ 
+		clear:none;
+		overflow:hidden; /*超出宽度部分隐藏*/ 
+		} 
+	#status { 
+		width:30%; 
+		text-align:left; 
+		float:left; /*浮动居右*/ 
+		clear:none;
+		overflow:hidden 
+		} 
+		#education { 
+		width:30%; 
+		text-align:left; 
+		float:left; /*浮动居右*/ 
+		clear:none;
+		overflow:hidden 
+		} 
+
+#Layer5 {
+  position:absolute;
+  width:90%;
+  height:400px;
+  z-index:1;
+  left: 60px;
+  top: -20px;
+  margin-top: 100px;
+  border: 1.5px double ;
+}
+.STYLE1 {font-size: medium}
+
+.STYLE2 {color: #FF0000}
+</style>
+<script type="text/javascript">
+function goback () {
+	  window.frameElement.contentWindow.history.go(-1);
+	}
+$(function () {    	
+	
+	if($("#type").val()=="dep")
+		$("#department").hide();
+	if($("#type").val()=="stu")
+		$("#status").hide();
+	if($("#type").val()=="edu")
+		$("#education").hide();
+	//alert($("#type").val());
+	// Radialize the colors
+	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+	    return {
+	        radialGradient: { cx:0.5, cy: 0.3, r: 0.7 },
+	        stops: [
+	            [0, color],
+	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	        ]
+	    };
+	});
+	
+	// Build the chart
+     chart = new Highcharts.Chart({
+        chart: { 
+        	renderTo: 'department',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text:{*if isset($edu)*}'<strong>{*$edu*}'{*/if*}{*if isset($sta)*}'<strong>{*$sta*}'{*/if*}+'员工部门分布'
+        },
+        tooltip: {
+        	 formatter: function (){
+                 return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 2) 
+                 + "%<br/><strong>点击查看"+this.point.name+"员工信息</strong>";
+             },
+             
+    	    
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function() {
+                    	 return '<b>'+ this.point.name +'</b>: '+ this.point.num +' 人';                       
+                    }
+                }  ,             
+                
+		        events:{
+		            click: function(e) {
+		            	window.open('../staffStruct/0/?type=dep&department='+e.point.type,"_self"); //单击每个饼图打开一个页面，同时传递参数，单击了哪个饼图，题                                                                //目id是多少。
+		            }
+		        },
+		        showInLegend: false
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '百分比',
+           
+            data: [
+                   {
+                       name: '财务资产部',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$cwzc[0]['num']*},
+					   txt:  '财务资产部',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type: '0',
+					   tid: '123',
+					   num:{*$cwzc[0]['num']*},
+                       sliced: true,   //true代表选中。可以将正确答案默认选中。
+                       selected: true
+                   },
+                   {
+                       name: '综合管理部',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$zhgl[0]['num']*},
+					   txt: '综合管理部',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'2',
+					   tid: '123',
+					   num:{*$zhgl[0]['num']*}
+                       
+                   },
+                   {
+                       name: '甸顶山风电场',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$ddsfc[0]['num']*},
+					   txt: '甸顶山风电场',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'4',
+					   tid: '123',
+					   num:{*$ddsfc[0]['num']*}                       
+                   },
+                   {
+                       name: '计划工程部',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$jhgc[0]['num']*},
+					   txt: '计划工程部',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'5',
+					   tid: '123',
+					   num:{*$jhgc[0]['num']*}                       
+                   },
+                   {
+                       name: '安全生产部',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$aqsc[0]['num']*} ,
+					   txt: '安全生产部',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'6',
+					   tid: '123',
+					   num:{*$aqsc[0]['num']*}                        
+                   },
+                   {
+                       name: '公司领导',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$gs[0]['num']*} ,
+					   txt: '公司领导',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'10',
+					   tid: '123',
+					   num:{*$gs[0]['num']*}                        
+                   },
+                   {
+                       name: '筹备处',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                       y: {*$cb[0]['num']*} ,
+					   txt: '筹备处',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+					   type:'3',
+					   tid: '123',
+					   num:{*$cb[0]['num']*}                        
+                   }                               
+            ],           
+        }]
+    });
+
+     $('#status').highcharts({
+         chart: {         	
+             plotBackgroundColor: null,
+             plotBorderWidth: null,
+             plotShadow: false
+         },
+         title: {
+             text: {*if isset($dep)*}'<strong>{*$dep*}'{*/if*}{*if isset($edu)*}'<strong>{*$edu*}'{*/if*}+'员工职称分布'
+         },
+         tooltip: {
+        	 formatter: function (){
+                 return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 2) 
+                 + "%<br/><strong>点击查看全公司"+this.point.name+"员工信息</strong>";
+             },
+             style:{
+            	 color:'green',
+            	 size:10
+            	 }
+         },
+         plotOptions: {
+             pie: {
+                 allowPointSelect: true,
+                 cursor: 'pointer',
+                 dataLabels: {
+                     enabled: true,
+                     color: '#000000',
+                     connectorColor: '#000000',
+                     formatter: function() {
+                     	 return '<b>'+ this.point.name +'</b>: '+ this.point.num +' 人';                       
+                     }
+                 }  ,             
+                 
+ 		        events:{
+ 		            click: function(e) { 		            	
+ 		            	window.open('../staffStruct/0/?type=stu&status='+e.point.type,"_self"); //单击每个饼图打开一个页面，同时传递参数，单击了哪个饼图，题                                                                //目id是多少。
+ 		            }
+ 		        },
+ 		        showInLegend: false
+             }
+         },
+         series: [{
+             type: 'pie',
+             name: '百分比',
+             data: [
+                    {
+                        name: '助理级职称',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$zlj[0]['num']*},
+ 					   txt:  '助理级',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type: '助理级',
+ 					   tid: '123',
+ 					   num:{*$zlj[0]['num']*},
+                        sliced: true,   //true代表选中。可以将正确答案默认选中。
+                        selected: true
+                    },
+                    {   name: '中级职称',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$zj[0]['num']*},
+ 					   txt: '中级',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'中级',
+ 					   tid: '123',
+ 					   num:{*$zj[0]['num']*}                       
+                    },
+                    {
+                        name: '高级职称',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$gj[0]['num']*},
+ 					   txt: '高级',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'高级',
+ 					   tid: '123',
+ 					   num:{*$gj[0]['num']*}                       
+                    },
+                    {
+                        name: '正高级职称',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$zgj[0]['num']*},
+ 					   txt: '正高级',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'正高级',
+ 					   tid: 'zgj',
+ 					   num:{*$jhgc[0]['num']*}                       
+                    }
+             ]
+             
+         }]
+            
+     });
+     $('#education').highcharts({
+         chart: {         	
+             plotBackgroundColor: null,
+             plotBorderWidth: null,
+             plotShadow: false
+         },
+         title: {
+             text: {*if isset($dep)*}'<strong>{*$dep*}'{*/if*}{*if isset($sta)*}'<strong>{*$sta*}'{*/if*}+'员工学历分布'
+         },
+         tooltip: {
+        	 formatter: function (){
+                 return this.point.name + ": " + Highcharts.numberFormat(this.percentage, 2) 
+                 + "%<br/><strong>点击查看全公司"+this.point.name+"学历员工信息</strong>";
+             },
+             style:{color:'blue'}
+         },
+         plotOptions: {
+             pie: {
+                 allowPointSelect: true,
+                 cursor: 'pointer',
+                 dataLabels: {
+                     enabled: true,
+                     color: '#000000',
+                     connectorColor: '#000000',
+                     formatter: function() {
+                     	 return '<b>'+ this.point.name +'</b>: '+ this.point.num +' 人';                       
+                     }
+                 }  ,             
+                 
+ 		        events:{
+ 		            click: function(e) {
+ 		            	//alert(1);
+ 							window.open('staffStruct/0/?type=edu&education='+e.point.type,"_self"); //单击每个饼图打开一个页面，同时传递参数，单击了哪个饼图，题                                                                //目id是多少。
+ 		            }
+ 		        },
+ 		        showInLegend: false
+             }
+         },
+         series: [{
+             type: 'pie',
+             name: '百分比',
+             data: [
+                    {
+                        name: '高中及以下',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$gzjyx[0]['num']*},
+ 					   txt:  '高中及以下',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type: '高中及以下',
+ 					   tid: '123',
+ 					   num:{*$gzjyx[0]['num']*},
+                        sliced: true,   //true代表选中。可以将正确答案默认选中。
+                        selected: true
+                    },
+                    {   name: '中专',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$zz[0]['num']*},
+ 					   txt: '中专',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'中专',
+ 					   tid: '123',
+ 					   num:{*$zz[0]['num']*}                       
+                    },
+                    {
+                        name: '大专',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$dz[0]['num']*},
+ 					   txt: '大专',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'大专',
+ 					   tid: '123',
+ 					   num:{*$dz[0]['num']*}                       
+                    },
+                    {
+                        name: '本科',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$bk[0]['num']*},
+ 					   txt: '本科',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'本科',
+ 					   tid: 'zgj',
+ 					   num:{*$bk[0]['num']*}                       
+                    }
+                    ,
+                    {
+                        name: '硕士',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$ss[0]['num']*},
+ 					   txt: '硕士',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'硕士',
+ 					   tid: 'zgj',
+ 					   num:{*$ss[0]['num']*}                       
+                    }
+                    ,
+                    {
+                        name: '博士',    //name,y,sliced,selected是highchart的内置参数，下面的txt，type，tid，num是自己定义的。
+                        y: {*$bs[0]['num']*},
+ 					   txt: '博士',  //这些是自己定义的，使用时，用this.point.txt或者e.point.txt来用。
+ 					   type:'博士',
+ 					   tid: 'zgj',
+ 					   num:{*$bs[0]['num']*}                       
+                    }
+             ]
+             
+         }]
+            
+     });
+});
+
+</script>
+</head>
+<div class="well" style="margin-top: 10px;width:80%;margin-left:50px;margin-right:10px;"> 
+  <lable>员工信息统计</lable>
+  <button class="btn pull-right"  name="goback" onclick="goback()"> 返回 </button>
+</div>
+ <input type="hidden" value="{*if isset($type)*}{*$type*}{*/if*}" id="type"/>
+    <div >
+	<div id="department" style="min-width:33%; height: 400px; margin: 0 auto"></div>
+	<div id="status" style="min-width: 34%; height: 400px; margin: 0 auto"></div>
+	<div id="education" style="min-width:33%; height: 400px; margin: 0 auto"></div>
+	</div>
+  
+  <table  class="table table-bordered" style="width:90%;margin-top:20px;margin-left:10px;margin-right:10px;margin-bottom:10px">
+	<tr>
+		<tr>
+        <th width="5%"><center>序号</center></th>
+        <th width="8%"><center>姓名</center></th>        
+        <th width="10%"><center>部门</center></th>
+        <th width="10%"><center>岗位</center></th>
+        <th width="8%"><center>职称</center></th>
+        <th width="8%"><center>学历</center></th>
+        <th width="5%"><center>班组</center></th>
+        <th width="5%"><center>性别</center></th>
+        <th width="10%"><center>年龄</center></th>
+        
+    </tr>
+    {*$i=1*}
+	</tr>	
+	{*foreach $userList as $list*}
+		<tr>
+			<td><center>{*$i++*}</center></td>
+            <td><center>{*$list['name']*}</center></td>
+            
+             <td><center>{*$list['department_name']*}</center></td>
+              <td><center>{*$list['role_name']*}</center></td>
+              <td><center>{*$list['staff_status']*}</center></td>
+              <td><center>{*$list['educational_background']*}</center></td>
+            <td><center>
+                {*if $list['work_group']==0*}无{*/if*}
+               {*if $list['work_group']==1*}甲值{*/if*}
+               {*if $list['work_group']==2*}乙值{*/if*}
+                </center>
+            </td>
+            <td><center>{*if $list['gender']==0*}女{*/if*}
+               {*if $list['gender']==1*}男{*/if*}</center></td>
+            <td><center>{*$list['age']*}</center></td>
+            
+		</tr>
+	{*/foreach*}
+</table>
+		{*if $page_link != ''*}
+            <div style="margin-bottom: 50px;">
+            <span class="page_link pull-right pagination">{*$page_link*}</span></div>
+        {*/if*}
+  
+  
+</html>

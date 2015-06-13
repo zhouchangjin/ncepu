@@ -1,0 +1,512 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>贫困生认定系统</title>
+	<link rel="shortcut icon" href="/psls/ui/img/icon/book.ico">
+	<link href="/psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+	<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+    var pUser="{*$user->getName()*}";
+    var pDep="{*$user->getDepartment()->getDepartmentName()*}";
+    var pRole="{*$user->getRole()->getRoleName()*}";
+	function showLocale(objD){
+		var str,colorhead,colorfoot;
+		var yy = objD.getYear();
+		if(yy<1900) yy = yy+1900;
+		var MM = objD.getMonth()+1;
+		if(MM<10) MM = '0' + MM;
+		var dd = objD.getDate();
+		if(dd<10) dd = '0' + dd;
+		var hh = objD.getHours();
+		if(hh<10) hh = '0' + hh;
+		var mm = objD.getMinutes();
+		if(mm<10) mm = '0' + mm;
+		var ss = objD.getSeconds();
+		if(ss<10) ss = '0' + ss;
+		var ww = objD.getDay();
+		if  ( ww==0 )  colorhead="<font>";
+		if  ( ww > 0 && ww < 6 )  colorhead="<font>";
+		if  ( ww==6 )  colorhead="<font>";
+		if  (ww==0)  ww="星期日  ";
+		if  (ww==1)  ww="星期一  ";
+		if  (ww==2)  ww="星期二  ";
+		if  (ww==3)  ww="星期三  ";
+		if  (ww==4)  ww="星期四  ";
+		if  (ww==5)  ww="星期五  ";
+		if  (ww==6)  ww="星期六  ";
+		colorfoot="</font>"
+		str = colorhead+'\t\t\t\t'+ yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + "  " + ww+ colorfoot;
+		return(str);
+	}
+	function tick(){
+		var today;
+		today = new Date();
+		document.getElementById("localtime").innerHTML = showLocale(today);
+		window.setTimeout("tick()", 1000);
+	}
+	function getType(item){
+		var method;
+		if(!item.type){
+			method="addTab";
+		}else if(item.type=="modal"){
+			method="showModal"
+		}
+		return method;
+	}
+	$(function(){
+		
+		/////////////
+		
+		   $("a#selfInfo").click(function(){
+    		var f_level = "account_manage";
+			var s_level = "self_info_maintenance";
+			var title   = "个人修改密码";
+    		$('#main-tab').tabs('add',{
+				title:title,
+				content:'<iframe class="resizeFrame" id="'+s_level+'" name="'+s_level+'" scrolling="yes" frameborder="0" src="/psls/'+f_level+'/'+s_level+'"   style="width:100%;height:100%;_border:none;" ></iframe>',
+				iconCls:'icon-save',
+				closable:true,
+				tools:[{
+					iconCls:'icon-mini-refresh',
+					handler:function(){
+						document.getElementById(s_level).contentWindow.location.reload(); 
+						}
+					}]
+				});
+    		});
+		
+		
+		/////////////////
+		tick();
+		$('#indexpage').html("<iframe class='resizeFrame' frameborder=0></iframe>");
+		var height=$('.resizeFrame').parent().height();
+		var width=$('.resizeFrame').parent().width();
+		$('.resizeFrame').css("height",height);
+		$('.resizeFrame').css("width",width);
+		$('.resizeFrame').attr("src","/psls/userinterface/userinterface/home");
+		$('#acc').accordion({
+			fit:true
+		});
+		
+		$.post("/psls/userinterface/userinterface/menu",function(data){
+			var json=eval('('+data+')').Module;
+			if(!json.length){
+				var html="";
+				var module=json;
+				html+="<ul class='nav navbar-nav nav-stacked'>";
+				var items=module.Item;
+				if(items.length){
+					for(var j=0;j<items.length;j++)
+					{
+						
+						var item=items[j]['attrs'];
+						if(typeof item != "undefined"){
+							var id=item.id;
+							var name=item.item;
+							var modulen=item.module;
+							var title=item.title;
+							html+="<li><a  id= '"+id+"' ul='"+modulen+"' li='"+name+"' style='width:140px'  href='javascript:void(0)' onclick='"+getType(item)+"(\""+id+"\")'>"+title+"</li>";
+						}
+					}
+				}else{
+					var item=items['attrs'];
+					if(typeof item != "undefined"){
+						var id=item.id;
+						var name=item.item;
+						var modulen=item.module;
+						var title=item.title;
+						html+="<li><a  id= '"+id+"' ul='"+modulen+"' li='"+name+"' style='width:120px'  href='javascript:void(0)' onclick='"+getType(item)+"(\""+id+"\")'>"+title+"</li>";
+					}
+				}
+				
+				html+="</ul>";
+				var flag=true;
+				$('#acc').accordion('add', {
+			        title: module['attrs'].title,
+			        content: html,
+			        selected: flag
+			    });
+				
+			}else{
+				
+				for(var i=0;i<json.length;i++){
+					var html="";
+					var module=json[i];
+					html+="<ul class='nav navbar-nav nav-stacked'>";
+					var items=module.Item;
+					if(items.length){
+						for(var j=0;j<items.length;j++)
+						{
+							
+							var item=items[j]['attrs'];
+							if(typeof item != "undefined"){
+								var id=item.id;
+								var name=item.item;
+								var modulen=item.module;
+								var title=item.title;
+								html+="<li><a  id= '"+id+"' ul='"+modulen+"' li='"+name+"' style='width:140px'  href='javascript:void(0)' onclick='"+getType(item)+"(\""+id+"\")'>"+title+"</li>";
+							}
+						}
+					}else{
+						var item=items['attrs'];
+						if(typeof item != "undefined"){
+							var id=item.id;
+							var name=item.item;
+							var modulen=item.module;
+							var title=item.title;
+							html+="<li><a  id= '"+id+"' ul='"+modulen+"' li='"+name+"' style='width:120px'  href='javascript:void(0)' onclick='"+getType(item)+"(\""+id+"\")'>"+title+"</li>";
+						}
+					}
+					
+					html+="</ul>";
+					var flag=false;
+					if(i==0) flag=true;
+					$('#acc').accordion('add', {
+				        title: module['attrs'].title,
+				        content: html,
+				        selected: flag
+				    });
+				}
+				
+			}
+			
+		    
+		});
+		
+		
+		
+	});
+	
+	function showWizard(url,title,saveFun,params){
+		$("#wizardBtn").html("下一步");
+		if(typeof params == "undefined"){
+			params={
+				width:800,
+				height:400
+			};
+		}
+		var width=params.width;
+		var height=params.height;
+		var frameHeight=height-20;
+		var frameWidth=width-25;
+		$('#wizardDlg').css('width',width+'px').css('height',height+'px');
+		$('#wizardBody').html("<iframe frameborder='0' height='"+frameHeight+"' width='"+frameWidth+"' src='"+url+"'></iframe>");
+		$('#wizardLabel').html(title);
+		$('#wizard').modal('show').css({
+			top:"100px"
+		});
+		$("#wizardBtn").unbind('click');
+		$("#wizardBtn").click(function(){
+			
+			var iframe=$('#wizardBody iframe')[0].contentWindow;
+			var res=0;
+			if(iframe.next){
+				res=iframe.next();
+			}
+		   if($("#wizardBtn").html()=="保存"){
+			   $('#wizard').modal('hide');
+			    setTimeout(function(){
+			    	saveFun();
+			    },500);
+		   }else if(res==0){
+			   $("#wizardBtn").html("保存");
+		   }
+		});
+		
+	}
+	
+	///////////////////
+	function showModal2(url,title,saveFun,params){
+		if(typeof params == "undefined"){
+			params={
+				width:800,
+				height:400
+			};
+		}
+		var width=params.width;
+		var height=params.height;
+		var frameHeight=height-20;
+		var frameWidth=width-25;
+		$('#dlgTemp2dlg').css('width',width+'px').css('height',height+'px');
+		$('#dlgTemp2Body').html("<iframe frameborder='0' height='"+frameHeight+"' width='"+frameWidth+"' src='"+url+"'></iframe>")
+		$('#myModalLabel2').html(title);
+		$('#dlgTemp2').modal('show').css({
+			top:"100px"
+		});
+		$("#dlgTemp2Btn").unbind('click');
+		$("#dlgTemp2Btn").click(function(){
+			var iframe=$('#dlgTemp2Body iframe')[0].contentWindow;
+			if(iframe.save){
+				iframe.save();
+			}
+		    $('#dlgTemp2').modal('hide');
+		    setTimeout(function(){
+		    	saveFun();
+		    },500);
+
+	    });
+	}
+	function showMenuModal(url,title){
+		$('#dlgTempBody').load(url,{},function(response,status,xhr){
+			
+		});
+		$('#myModalLabel').html(title);
+		$('#dlgTemp').modal('show').css({
+			top:"100px"
+			
+		});
+	}
+	
+	//////////////////
+	function showModal(id){
+		var f_level = $("#"+id).attr("ul");
+		var s_level = $("#"+id).attr("li");
+		var title   = $("#"+id).text();
+		$('#dlgTempBody').load("/psls/"+f_level+"/"+s_level,{},function(response,status,xhr){
+			
+		});
+		$('#myModalLabel').html(title);
+		$('#dlgTemp').modal('show').css({
+			top:"100px"
+			
+		});
+	}
+	function save(){
+		var url=$('#dlgTempBody form').attr('action');
+		var items=$('#dlgTempBody form :input');
+		var param=new Object;
+		for(var i=0;i<items.length;i++){
+			var item=items[i];
+			param[item.name]=item.value;
+		}
+		$.post(url,param,function(data){
+			var json=eval('('+data+')');
+			if(json.viewPage){
+				var id=json.id;
+				var url=json.viewPage+"/"+id;
+				$('#dlgTemp').modal('hide');
+				addTab2(url,json.name);
+			}
+		})
+	}
+	function addTab2(url,title){
+		var id=new Date().getTime();
+		$('#main-tab').tabs('add',{
+			title:title,
+			content:'<iframe class="resizeFrame" id="'+id+'" scrolling="yes" frameborder="0" src=""  ></iframe>',
+			iconCls:'icon-save',
+			closable:true,
+			tools:[{
+				iconCls:'icon-mini-refresh',
+				handler:function(e){
+					var tab = $('#main-tab').tabs('getSelected');
+					var frm=tab.find('.resizeFrame')[0];
+					frm.contentWindow.location.reload(); 
+				}
+			}]
+		});
+		refresh();
+		$('#'+id).attr("src",url);
+	}
+	function addTab(id){
+		var f_level = $("#"+id).attr("ul");
+		var s_level = $("#"+id).attr("li");
+		var title   = $("#"+id).text();
+		var id=new Date().getTime();
+		$('#main-tab').tabs('add',{
+			title:title,
+			content:'<iframe class="resizeFrame" id="'+id+'" scrolling="yes" frameborder="0" src=""  ></iframe>',
+			iconCls:'icon-save',
+			closable:true,
+			tools:[{
+				iconCls:'icon-mini-refresh',
+				handler:function(){
+					var tab = $('#main-tab').tabs('getSelected');
+					var frm=tab.find('.resizeFrame')[0];
+					frm.contentWindow.location.reload(); 
+				}
+			}]
+		});
+		var url="/psls/"+f_level+"/"+s_level
+		refresh();
+		$('#'+id).attr("src",url);
+
+	}
+	
+	function refresh(){
+		var height=$('.resizeFrame').parent().height();
+		var width=$('.resizeFrame').parent().width();
+		$('.resizeFrame').css("height",height);
+		$('.resizeFrame').css("width",width);
+	}
+	
+	function update(){
+		setTimeout(refresh,300);
+	}
+	
+	
+	
+	
+	
+	/////////////////
+	
+
+	
+	</script>
+	
+	
+	
+	<style>
+	 .resizeFrame{
+	 	overflow-x:hidden;
+	 }
+	 .panel-body{
+			scrolling :no;
+	}
+	html,body{
+			height:100%;
+			width:100%;
+	}
+	.navbar-nav{
+		float:none;
+	}
+	.modal-header {
+			padding: 10px 10px 5px;
+			background-color: rgba(22, 101, 243, 0.93);
+			border-bottom: 1px solid #e5e5e5;
+	}
+	.modal-title {
+			font-size: 16px;
+			font-family: '黑体';
+			color: white;
+	} 
+	.close {
+		    color:white;
+		    opacity:1;
+	}
+	.modal-footer {
+		padding: 3px 10px 5px;
+		margin-top: 0px;
+		text-align: right;
+		border-top: 1px solid #e5e5e5;
+		background-color:lightgrey;
+	}
+	.modal-body{
+		background-color:rgb(246, 250, 206);
+	}
+	</style>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:100%">
+		<div data-options="region:'north'" style="background-image:url('/psls/ui/img/banner1.jpg');background-size: 100% 90px;height:80px;padding:0px;">
+		  <div class="col-xs-8 col-md-offset-3">
+		  <h2><font color="white" face="黑体"></font></h2>
+		  </div>
+		  <div class="col-xs-12" style="float:left;margin-top:-10px;text-align:right">
+	  		<!--欢迎您，{*$username*}！&nbsp;&nbsp;-->
+		  	<font color="white"><strong><span id="localtime"></span>|
+		  	<span>当前用户：{*$user->getName()*}&nbsp;|</span></font>
+		  	<!--<span>职务：{*$user->getRole()->getRoleName()*}&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+		  	<a  href="/psls/login/user_logout"><font color="white">安全退出&nbsp;|</font></a>
+		  	<a id="selfInfo" href="#"><font color="white">个人密码修改</font></a></strong>
+		  </div>
+		</div>
+		
+		<div data-options="region:'west',split:true,onCollapse:update,onResize:update" title="快捷方式" style="width:200px;">
+			<div id="acc">
+				
+			
+			</div>
+		
+		</div>
+		
+		
+		
+		<div data-options="region:'center'">
+				<div  id="main-tab" name="main-tab" class="easyui-tabs" data-options="fit:true,border:false" style="margin-top:0px;">
+						<div id="indexpage" class="span9 columns" title="首页">
+						</div>
+				</div>
+		</div>
+</div>
+
+<!-- modal dialog-->
+<div id="dlgTemp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+ <div class="modal-dialog">
+ 
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-title" id="myModalLabel"></div>
+        </div>
+        <div id="dlgTempBody" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        	<button type="button" class="btn btn-primary" onclick="save()">保存</button>
+        
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+</div>
+
+<!-- modal dialog-->
+<div id="dlgTemp2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+ <div id="dlgTemp2dlg" class="modal-dialog">
+ 
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-title" id="myModalLabel2"></div>
+        </div>
+        <div id="dlgTemp2Body" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        	<button id="dlgTemp2Btn" type="button" class="btn btn-primary">保存</button>
+        
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+</div>
+
+
+<!-- wizard dialog-->
+<div id="wizard" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+ <div id="wizardDlg" class="modal-dialog">
+ 
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="modal-title" id="wizardLabel"></div>
+        </div>
+        <div id="wizardBody" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        	<button id="wizardBtn" type="button" class="btn btn-primary">下一步</button>
+        
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
+</div>
+
+</body>
+</html>

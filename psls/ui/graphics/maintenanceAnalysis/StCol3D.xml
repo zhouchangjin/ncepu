@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='gbk'?>
+<chart palette='1' caption='计划完成情况' shownames='1' showvalues='0'  numberPrefix=' ' showSum='1' decimals='0' overlapColumns='0'>
+<categories>
+<category label='一月' />
+<category label='二月' />
+<category label='三月' />
+<category label='四月' />
+<category label='六月' />
+<category label='七月' />
+<category label='八月' />
+<category label='九月' />
+<category label='十月' />
+<category label='十一月' />
+<category label='十二月' />
+</categories>
+<dataset seriesName='月度计划按时完成量'  showValues='0'>
+<set value='45' />
+<set value='23' />
+<set value='32' />
+<set value='55' />
+<set value='30' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+</dataset>
+<dataset seriesName='月度计划延迟量'  showValues='0'>
+<set value='5' />
+<set value='0' />
+<set value='1' />
+<set value='3' />
+<set value='2' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+<set value='0' />
+</dataset>
+</chart>

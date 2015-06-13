@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<chart palette='1' caption='计划完成情况' shownames='1' showvalues='0'  numberPrefix=' 'showSum='1' decimals='0' overlapColumns='0'>
+<categories>
+<category label='201301月'/>
+<category label='201302月'/>
+<category label='201303月'/>
+</categories>
+<dataset seriesName='一类'  showValues='0'>
+<set value='1' />
+<set value='1' />
+<set value='1' />
+</dataset>
+<dataset seriesName='二类'  showValues='0'>
+<set value='0' />
+<set value='0' />
+<set value='1' />
+</dataset>
+<dataset seriesName='三类'  showValues='0'>
+<set value='0' />
+<set value='1' />
+<set value='1' />
+</dataset>
+<dataset seriesName='一般维护'  showValues='0'>
+<set value='1' />
+<set value='1' />
+<set value='1' />
+</dataset>
+</chart>

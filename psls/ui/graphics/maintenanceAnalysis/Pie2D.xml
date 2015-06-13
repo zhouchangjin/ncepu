@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="gbk"?>
+<chart caption='计划完成延迟因素分析'  showValues='0' decimals='0' formatNumberScale='0'>
+<set label="材料短缺" value='3' isSliced="1" />
+<set label='天气因素' value='10' />
+<set label='技术因素' value='13' />
+<set label='人员配置' value='5' />
+<set label='第三方因素' value='15' />
+</chart>
+

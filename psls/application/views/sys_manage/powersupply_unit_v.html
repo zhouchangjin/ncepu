@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+    </style>
+    <script>
+
+     function showWindow(){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var addUrl='/psls/sys_manage/powersupply_unit_c/addPage';
+      	that.showModal2(addUrl,'新建',saved,{
+      	    width:800,
+			height:400
+      	});
+     }
+      function saved(){
+    	 $('#tGrid').datagrid('reload');
+     }
+     
+     function edit(id){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/sys_manage/powersupply_unit_c/editPage/'+id;
+      	that.showModal2(url,'编辑',saved,{
+      	    width:800,
+			height:400
+      	});
+     }
+     
+     function del(id){
+     
+     	$.messager.confirm('删除', '确定删除?', function(r){
+			if (r){
+				 var url='/psls/sys_manage/powersupply_unit_c/delete/'+id;
+				 $.post(url,{id:id},function(data){
+					 $('#tGrid').datagrid('reload');
+				 });
+			}
+		});
+     
+     }
+     
+     function view(id,name){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/sys_manage/powersupply_unit_c/detail/'+id;
+      	that.addTab2(url,name);
+     }
+     
+     $(function() {
+        $('#tGrid').datagrid({
+           title:'供电所列表',
+           toolbar:'#tb',
+           pagination:true,
+           url:'/psls/sys_manage/powersupply_unit_c/grid',
+            columns:[
+        		    [
+					{field:"id",title:"序号"},
+					{field:"name",title:"供电所"},
+					{field:"address",title:"地址"},
+					{field:"description",title:"描述"},
+					{field:"department_name",title:"所属公司"},
+					{field:"cdate",title:"创建时间"}
+              			,{field:"view",title:"查看",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\',\''+b.name+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+              			}}
+              			,{field:"edit",title:"编辑",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="edit(\''+b.id+'\')"><span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑</button>';
+              			}}
+              			,{field:"del",title:"删除",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
+              			}}
+   		         	]
+	         		]
+        });
+     });
+    </script>
+    <style type="text/css">
+     	.tabs{
+       	height: 40px;
+     	}
+	  	.tabs li a.tabs-inner{
+        	height: 40px;
+      	}
+    </style>
+</head>
+<body >
+     <table id="tGrid" style="width:800px">
+     </table>
+     
+          
+<div id="tb" style="padding:5px;height:auto">
+<div style="margin-bottom:5px">
+<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow()">新建</a>
+</div>
+</div>
+  
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link href="/psls/ui/bootstrap/css/bootstrap.css" rel="stylesheet"></link>
+<link href="../../../psls/ui/css/signin.css" rel="stylesheet">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript" src="/psls/ui/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js">
+    </script>
+<script type="text/javascript" src="/psls/ui/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+    
+	$().ready(function(){
+		$("a#up").click(function(){
+			
+			if($("#newpassword").val()=="")
+				alert("请输入新密码");
+			else if($("#confirm").val()=="")
+				alert("请二次输入新密码");
+			else if($("#confirm").val()!=$("#newpassword").val()){
+				alert("两次密码输入不相符，请重新输入");
+				$("#newpassword").val("");
+				$("#confirm").val("");
+			}else{
+				$("form").submit();
+				
+			}
+		});
+	});
+</script>
+<title>修改个人密码</title>
+</head>
+<body>
+<form name="plan_add" id="plan_add" action="/psls/account_manage/self_info_maintenance/setNewPassword" method="post">
+ <input type="hidden" name="userId" value="{*$user->getId()*}"/>
+ <table style="width:50%;margin-top:20px;margin-left:50px;margin-right:10px;margin-bottom:10px;" class="table table-bordered table-center" >
+   <tr>
+   	<td>用户帐户</td><td><center>{*$user->getName()*}</center></td>
+  </tr>
+  <tr>
+   	<td>新密码</td>
+   	<td><input  type="password" class="input-xlarge" align="middle" name="newpassword" id="newpassword" length="20"/>
+    </td>
+  </tr>
+  <tr>
+    <td>确认密码</td>
+    <td><input class="input-xlarge" type="password" align="middle" name="confirm" id="confirm" length="20"/>
+    </td>
+   </tr>
+   <tr>
+    <td colspan="2">
+   <center>      
+	<a class="btn btn-info" href="#" id="up">确认修改</a>
+    </center>
+    </td>
+   </tr>
+  </table>
+</form>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+    </style>
+    <script>
+    
+     function view(id){
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/sys_manage/notification_c/detail/'+id;
+      	that.addTab2(url,'这是标题');
+     }
+     
+     $(function() {
+        $('#tGrid').datagrid({
+           title:'这里是标题',
+           pagination:true,
+           url:'/psls/sys_manage/notification_c/grid',
+            columns:[
+        		    [
+					{field:"id",title:""},
+					{field:"cdate",title:"创建时间"},
+					{field:"title",title:"标题"},
+					{field:"content",title:"内容"}
+              			,{field:"view",title:"查看",formatter:function(a,b,c){
+              				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+              			}}
+   		         	]
+	         		]
+        });
+     });
+    </script>
+    <style type="text/css">
+     	.tabs{
+       	height: 40px;
+     	}
+	  	.tabs li a.tabs-inner{
+        	height: 40px;
+      	}
+    </style>
+</head>
+<body >
+     <table id="tGrid" style="width:800px">
+     </table>
+</body>
+</html>

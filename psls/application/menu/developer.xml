@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu xmlns="http://www.example.org/menu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/menu menu.xsd ">
+	<Module title="模块生成">
+		<Item id="11" item="database_admin_c/create_table" module="template" title="数据库设计" />
+		<Item id="12" item="devMode" module="login" title="生成模块" />
+	</Module>
+	<Module title="数据库更新">
+		<Item id="21" item="admin.php" module="admin" title="更新数据库" />
+	</Module>
+</Menu>

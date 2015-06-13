@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+<script>
+function genMod(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/model/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+	
+}
+function genCon(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/controller/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+}
+function genReadView(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/readonlyView/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+}
+function genView(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/view/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+	
+}
+
+function genAddView(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/addview/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+}
+function genEditView(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/editview/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+}
+function genDetailView(){
+	var tpath=$('#path')[0].value;
+	var ttable=$('#table')[0].value;
+	url="/psls/template/template_c/detail/"+tpath+"/"+ttable;
+	$.post(url,function(data){
+		$('#res')[0].innerHTML=data;
+	});
+}
+function showTab(url,title){
+	 var that=this;
+  	while(that!=that.parent){
+      	that=that.parent;
+      }
+  	that.addTab2(url,title);
+}
+</script>
+</head>
+<body>
+<table>
+<tr><td colspan="2">代码生成</td></tr>
+<tr><td>路径名称</td><td><input type="text" id="path"/></td></tr>
+<tr><td>数据库表名称</td><td><input type="text" id="table"/></td></tr>
+<tr><td>生成模型</td><td><button id="btn1" onclick="genMod()">执行</button></tr>
+<tr><td>生成控制器</td><td><button id="btn2" onclick="genCon()">执行</button></tr>
+<tr><td>insert页面</td><td><button id="btn3" onclick="genAddView()">执行</button></tr>
+<tr><td>update页面</td><td><button id="btn4" onclick="genEditView()">执行</button></tr>
+<tr><td>detail页面</td><td><button id="btn5" onclick="genDetailView()">执行</button></tr>
+<tr><td>生成视图</td><td><button id="btn6" onclick="genView()">执行</button></tr>
+<tr><td>生成只读视图</td><td><button id="btn6" onclick="genReadView()">执行</button></tr>
+</table>
+
+<div id="res"></div>
+
+</body>
+</html>

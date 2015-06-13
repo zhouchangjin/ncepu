@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<chart palette='1' caption='计划完成情况' shownames='1' showvalues='0'  numberPrefix=' 'showSum='1' decimals='0' overlapColumns='0'>
+<categories>
+<category label='1月'/>
+</categories>
+<dataset seriesName='月度计划按时完成量'  showValues='0'>
+<set value='0' />
+</dataset>
+<dataset seriesName='月度计划延迟量'  showValues='0'>
+<set value='0' />
+</dataset>
+</chart>

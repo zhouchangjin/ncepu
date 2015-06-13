@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/menu" xmlns:tns="http://www.example.org/menu" elementFormDefault="qualified">
+
+
+
+    <attribute name="title" type="string"></attribute>
+
+    <attribute name="id" type="string"></attribute>
+
+    <attribute name="module" type="string"></attribute>
+
+    <attribute name="item" type="string"></attribute>
+
+
+
+    
+    
+
+
+
+    <element name="Menu">
+    	<complexType>
+    		<sequence>
+    			<element ref="tns:Module" minOccurs="0"
+    				maxOccurs="unbounded">
+    			</element>
+    		</sequence>
+    	</complexType>
+    </element>
+
+    <element name="Module">
+    	<complexType>
+    		<sequence>
+    			<element ref="tns:Item" minOccurs="0"
+    				maxOccurs="unbounded">
+    			</element>
+    		</sequence>
+    		<attribute ref="tns:title"></attribute>
+    	</complexType></element>
+
+    <element name="Item">
+    	<complexType>
+    		<attribute ref="tns:item"></attribute>
+    		<attribute ref="tns:module"></attribute>
+    		<attribute ref="tns:id"></attribute>
+    		<attribute ref="tns:title"></attribute>
+    		<attribute ref="tns:type"></attribute>
+    	</complexType>
+    </element>
+
+    <attribute name="type" type="string"></attribute>
+</schema>

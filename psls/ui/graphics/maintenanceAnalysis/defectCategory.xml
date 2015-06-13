@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="gbk"?>
+<chart caption="缺陷类别分布" showValues="0" decimals="0" formatNumberScale="0">
+<set label="一类缺陷" value="1" isSliced="1"/>
+<set label="二类缺陷" value="1"/>
+<set label="三类缺陷" value="1"/>
+<set label="一般维护性缺陷" value="1"/>
+</chart>

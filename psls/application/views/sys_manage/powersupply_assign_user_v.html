@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+    <style type="text/css">
+      html,body{
+        width:99%;
+        height: 98%;
+      }
+
+    </style>
+    <script type="text/javascript">
+        var id="{*$powersupply_id*}";
+
+        function save(){
+
+        	var ids="";
+        	$("input[name='dept_checkbox']").each(function(){
+        		var id=$(this).attr('id');
+        		if($(this).attr("checked")){
+        			ids+=id+";"
+        		}
+        	});
+        	var url="/psls/sys_manage/powersupply_unit_c/assignUser";
+        	$.post(url,{ids:ids,id:id},function(){
+        		
+        	});
+        }
+    	$(function(){
+    		$('#tGrid').datagrid({
+           title:'用户列表',
+           pagination:true,
+           url:'/psls/sys_manage/powersupply_unit_c/usergrid/{*$powersupply_id*}',
+            columns:[
+        		    [
+						{field:"id",title:"选择",formatter:function(a,b,c){
+							return '<input name="dept_checkbox" type="checkbox" id="'+b.id+'"/>';
+						}},
+						{field:"name",title:"用户名"},
+						{field:"department_name",title:"所属公司"}
+   		         	]
+	         		]
+        });
+    		
+    });
+    </script>
+</head>
+<body>
+<table id="tGrid" style="width:600px;height:300px">
+</table>
+</body>
+</html>
