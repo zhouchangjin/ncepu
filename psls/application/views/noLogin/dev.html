@@ -5,6 +5,20 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
 <script>
+
+function initialDirectory(){
+	url="/psls/template/template_c/path";
+	$.post(url,function(data){
+		var json=eval("("+data+")");
+		var opts="";
+		for(var i=0;i<json.length;i++){
+			var tpath=json[i];
+			opts+="<option value='"+tpath+"'>"+tpath+"</option>";
+		}
+		$('#path').html(opts);
+	});
+	
+}
 function genMod(){
 	var tpath=$('#path')[0].value;
 	var ttable=$('#table')[0].value;
@@ -71,12 +85,16 @@ function showTab(url,title){
       }
   	that.addTab2(url,title);
 }
+
+$(function(){
+	initialDirectory();
+});
 </script>
 </head>
 <body>
 <table>
 <tr><td colspan="2">代码生成</td></tr>
-<tr><td>路径名称</td><td><input type="text" id="path"/></td></tr>
+<tr><td>路径名称</td><td><select id="path"></select></td></tr>
 <tr><td>数据库表名称</td><td><input type="text" id="table"/></td></tr>
 <tr><td>生成模型</td><td><button id="btn1" onclick="genMod()">执行</button></tr>
 <tr><td>生成控制器</td><td><button id="btn2" onclick="genCon()">执行</button></tr>

@@ -8,6 +8,24 @@ class Template_c extends MY_Controller {
 	public function index(){
 		$this->m_data=array();
 	}
+	
+	public function path(){
+		$directory="application/models";
+		$files = array();
+		if(is_dir($directory)) {
+			if($dh = opendir($directory)) {
+				while(($file = readdir($dh)) !== false) {
+					if($file != '.' && $file != '..') {
+						if(is_dir($directory.'/'.$file))
+						$files[] = $file;  // array push 的另一种写法
+						
+					}
+				}
+				closedir($dh);
+			}
+		}
+		echo json_encode($files);
+	}
 	public function detail($modelpath,$modelname){
 		
 		$path='application/views/'.$modelpath.'/'.$modelname.'_detail_v.html';

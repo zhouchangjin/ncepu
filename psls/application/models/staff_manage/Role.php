@@ -58,17 +58,7 @@ class Role  extends MY_Model {
 	 * @param field_type $roleRight
 	 */
 	public function setRoleRight() {
-		$sql="select right_code,right_description from right_info natural join role_info ".
-		  		"natural join role_to_right where role_id=".$this->roleId;
-		$right =$this->getQuery($sql);
-		for($i=0;$i<count($right);$i++){
-			$this->roleRight[$i]=new Right();
-			//$this->roleRight[$i]->setRightId($right[$i]['right_id']);
-			$this->roleRight[$i]->setRightCode($right[$i]['right_code']);
-			$this->roleRight[$i]->setRightDescription($right[$i]['right_description']);
-		}
-		
-		//var_dump($this->roleRight);die;
+
 	}
 
 	

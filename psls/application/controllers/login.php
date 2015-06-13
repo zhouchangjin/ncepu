@@ -7,12 +7,12 @@ class Login extends MY_Controller {
 	{
 	    parent::__construct();
 	    $this->load->helper('url');
+	    $this->load->model('sys_manage/department_info_m');
 	    $this->load->model('sys_manage/user_model');
 	    $this->load->model('staff_manage/Staff');
 	    $this->load->model('staff_manage/Department');
 	    $this->load->model('staff_manage/Right');
 	    $this->load->model('staff_manage/Role');
-	    $this->load->model('header/header_model');
 	    $this->load->library('session');
 	}
 
@@ -21,10 +21,7 @@ class Login extends MY_Controller {
 		$this->data['error_msg'] = '3';
 		$this->data['nav'] = '';
 		$this->data['sub_nav'] = '';
-		$sql="select * from header order by cdate desc";
-		$list     = $this->header_model-> getQuery($sql);
-		
-		$this->data['list'] = $list;
+
 		date_default_timezone_set('PRC');
 		$date =   date('Y-m-d H:i:s',time());
 		$date =  substr($date,0,10);
@@ -35,7 +32,7 @@ class Login extends MY_Controller {
 		$this->data['time1'] = date('Y-m-d',strtotime('-1 week'));
 
 		$sql="select * from department_info";
-		$department_list     = $this->header_model-> getQuery($sql);
+		$department_list     = $this->department_info_m-> getQuery($sql);
 		$this->data['department_list'] = $department_list;
 		
 		
@@ -69,11 +66,11 @@ class Login extends MY_Controller {
 			$this->ci_smarty->view('login',$this->data);
 		}else{
 			$sql="select a.department_info_id,b.name,".
-			"c.role_id,c.role_name,a.id,".
+			"c.id,c.name,a.id,".
 			"a.name,a.birthdate,a.gender,a.password,a.status,c.role_alias".
 			" from tt_user a,".
 			"department_info b,role_info c".			
-		    " where a.account='".$username."' and a.department_info_id=b.id and a.role_id=c.role_id";
+		    " where a.account='".$username."' and a.department_info_id=b.id and a.role_info_id=c.id";
 		  
 			$userInfo     = $this->user_model-> getQuery($sql);
 			//创建登录用户对象，保存用户信息到session中
@@ -518,7 +515,7 @@ class Login extends MY_Controller {
 
 	 	$department_info_id =$_POST['department'];
 	 	$sql        = "select * from tt_user where department_info_id='".$department_info_id."'";
-	 	$result     = $this->header_model->getQuery($sql);	
+	 	$result     = $this->user_model->getQuery($sql);	
 	 	for($i=0;$i<count($result);$i++){
 	 		 echo "<option value='".$result[$i]['account']."'>".$result[$i]['name']."</option>";
 	 	}//是将username的数据项全部打印出来

@@ -67,6 +67,8 @@ list("role_id",function(){
 $('#role_id').attr('value','{*$obj["role_id"]*}');});
 list("department_info_id",function(){
 $('#department_info_id').attr('value','{*$obj["department_info_id"]*}');});
+dictionary("gender",function(){
+$('#gender').attr('value','{*$obj["gender"]*}');});
 list("status",function(){
 $('#status').attr('value','{*$obj["status"]*}');});
      });
@@ -88,7 +90,7 @@ account:input_account,password:input_password,name:input_name,role_id:input_role
 <tr><td align="right">姓名:</td><td><input id='name' style='width:200px;' name='name' value='{*$obj['name']*}' type='text'/></td></tr>
 <tr><td align="right">角色:</td><td><select id='role_id' name='role_id' table='role' col='name' idname='id' style='width:200px' ></select></td></tr>
 <tr><td align="right">所属部门:</td><td><select id='department_info_id' name='department_info_id' table='department_info' col='name' idname='id' style='width:200px' ></select></td></tr>
-<tr><td align="right">性别:</td><td></td></tr>
+<tr><td align="right">性别:</td><td><select id='gender' name='gender' table='tt_user' style='width:200px' ></select></td></tr>
 <tr><td align="right">出生日期:</td><td><input class='easyui-datetimebox'  id='birthdate' style='width:200px' name='birthdate' value='{*$obj['birthdate']*}'/></td></tr>
 <tr><td align="right">状态:</td><td><select id='status' name='status' table='status' col='name' idname='id' style='width:200px' ></select></td></tr>
 <tr><td align="right">联系电话:</td><td><input id='contactnumber' style='width:200px;' name='contactnumber' value='{*$obj['contactnumber']*}' type='text'/></td></tr>
