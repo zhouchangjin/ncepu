@@ -43,14 +43,14 @@
 			      		return b.id;
 			      		
 					}},
-					{field:"student_id",title:"学号",formatter:function(a,b,c){
+					{field:"student",title:"学号",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
 			      			var v=dictionary["student_id"]["dictionary"][ b.student_id];
 			      		    if(typeof v !="undefined"){
 			      					return v["name"];
 			      			}
 			      		}
-			      		return b.student_id;
+			      		return b.student;
 			      		
 					}},
 					{field:"children_count",title:"受教育子女数",formatter:function(a,b,c){

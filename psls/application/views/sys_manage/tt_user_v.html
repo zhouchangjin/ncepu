@@ -114,24 +114,24 @@
 			      		return b.name;
 			      		
 					}},
-					{field:"role_id",title:"角色",formatter:function(a,b,c){
+					{field:"role_info",title:"角色",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
-			      			var v=dictionary["role_id"]["dictionary"][ b.role_id];
+			      			var v=dictionary["role_info_id"]["dictionary"][ b.role_info_id];
 			      		    if(typeof v !="undefined"){
 			      					return v["name"];
 			      			}
 			      		}
-			      		return b.role_id;
+			      		return b.role_info;
 			      		
 					}},
-					{field:"department_info_id",title:"所属部门",formatter:function(a,b,c){
+					{field:"department_info",title:"所属部门",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
 			      			var v=dictionary["department_info_id"]["dictionary"][ b.department_info_id];
 			      		    if(typeof v !="undefined"){
 			      					return v["name"];
 			      			}
 			      		}
-			      		return b.department_info_id;
+			      		return b.department_info;
 			      		
 					}},
 					{field:"gender",title:"性别",formatter:function(a,b,c){

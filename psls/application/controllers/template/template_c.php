@@ -231,14 +231,15 @@ class Template_c extends MY_Controller {
 			$tmpLine='';
 			$length=count($this->m_data['fields']);
 			for($i=0;$i<$length;$i++){
-			      $tmpLine=$tmpLine.chr(0x09).chr(0x09).chr(0x09).chr(0x09).chr(0x09).'{field:"'.$this->m_data['fields'][$i]->name.'",title:"'.$this->m_data['fields'][$i]->comment.'",formatter:function(a,b,c){
+				  $name=str_replace("_id","",$this->m_data['fields'][$i]->name);
+			      $tmpLine=$tmpLine.chr(0x09).chr(0x09).chr(0x09).chr(0x09).chr(0x09).'{field:"'.$name.'",title:"'.$this->m_data['fields'][$i]->comment.'",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
 			      			var v=dictionary["'.$this->m_data['fields'][$i]->name.'"]["dictionary"][ b.'.$this->m_data['fields'][$i]->name.'];
 			      		    if(typeof v !="undefined"){
 			      					return v["name"];
 			      			}
 			      		}
-			      		return b.'.$this->m_data['fields'][$i]->name.';
+			      		return b.'.$name.';
 			      		
 					}}';
 			      if($i<$length-1) {
@@ -256,7 +257,10 @@ class Template_c extends MY_Controller {
 				$dictionary=$field->dictionary;
 				$type=$field->type;
 				$typeStr='';
-				if($field->name=="id" || $field->name=="cdate"){
+				if($field->name=="cdate"){
+					continue;
+				}
+				if($field->name=="id" && $type=='bigint'){
 					continue;
 				}
 				$tmpLine.='<tr><td align="right">';
@@ -329,7 +333,10 @@ class Template_c extends MY_Controller {
 			$length=count($this->m_data['fields']);
 			for($i=0;$i<$length;$i++){
 				$field=$this->m_data['fields'][$i];
-				if($field->name=="id" || $field->name=="cdate"){
+				if($field->name=="cdate"){
+					continue;
+				}
+				if($field->name=="id" && $field->type=='bigint'){
 					continue;
 				}
 				$tmpLine.=$field->name.':input_'.$field->name;
@@ -344,7 +351,9 @@ class Template_c extends MY_Controller {
 			$length=count($this->m_data['fields']);
 			for($i=0;$i<$length;$i++){
 				$field=$this->m_data['fields'][$i];
-				if($field->name=="id" || $field->name=="cdate"){
+				if($field->name=="cdate"){
+					continue;
+				}else if($field->name=="id" && $field->type=='bigint'){
 					continue;
 				}else if($field->type=="timestamp"){
 					$tmpLine.='var input_'.$field->name.'= $("input[name='.$field->name.']").val();';
@@ -360,10 +369,14 @@ class Template_c extends MY_Controller {
 			$length=count($this->m_data['fields']);
 			for($i=0;$i<$length;$i++){
 				$field=$this->m_data['fields'][$i];
-				if($field->name=="id" || $field->name=="cdate"){
+				if($field->name=="cdate"){
 					continue;
 				}
-				$tmpLine.='$data["'.$field->name.'"]=$this->input->post("'.$field->name.'");';
+				if($field->name=="id" && $field->type=='bigint'){
+					continue;
+				}
+				$tmpLine.='if($this->input->post("'.$field->name.'")){';
+				$tmpLine.='$data["'.$field->name.'"]=$this->input->post("'.$field->name.'");}';
 				$tmpLine.=chr(0x0A);
 			}
 			$line=$tmpLine;

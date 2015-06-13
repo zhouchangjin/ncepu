@@ -26,8 +26,39 @@ class Tt_user_c extends MY_Controller {
 		$page=$this->input->post('page')?$this->input->post('page'):1;
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
-		$count=$this ->tt_user_m->getCount($param);	
-		$this->data['list'] = $this ->tt_user_m->get_list($param,'*',$page_start,$per_page);
+		$field_param='tt_user.id';
+		$metadata=$this ->tt_user_m->getFieldsMetadata();
+		$jointtables=array();
+		for($i=0;$i<sizeof($metadata);$i++){
+		    $field=$metadata[$i];
+			if(strstr($field->name,"_id")){
+			   array_push($jointtables,str_replace("_id","",$field->name));
+			}else{
+			    if($field->name!='id'){
+			    	$field_param.=',tt_user.'.$field->name;
+			    }
+				
+			}
+		}
+		if(sizeof($jointtables)==0){
+			$count=$this ->tt_user_m->getCount($param);	
+			$this->data['list'] = $this ->tt_user_m->get_list($param,'*',$page_start,$per_page);
+		}else{
+		    $jointcondition=array();
+			for($k=0;$k<sizeof($jointtables);$k++){
+			    $leftjoin=array();
+				$table=$jointtables[$k];
+				$alias='t_'.$k;
+				$condition='tt_user.'.$table.'_id='.$alias.'.id';
+				$leftjoin['table']=$table.' '.$alias;
+				$leftjoin['condition']=$condition;
+				$leftjoin['type']='left';
+				array_push($jointcondition,$leftjoin);
+				$field_param.=','.$alias.'.name as '.$table;
+			}
+			$count=$this ->tt_user_m->get_list_count2($jointcondition,$param);	
+			$this->data['list'] = $this ->tt_user_m->get_list2($jointcondition,$param,$field_param,$page_start,$per_page);
+		}
 		$tGrid=array();
 		$tGrid['total']=$count;
 		$tGrid['rows']=$this->data['list'];
@@ -60,7 +91,7 @@ class Tt_user_c extends MY_Controller {
 $data["account"]=$this->input->post("account");
 $data["password"]=$this->input->post("password");
 $data["name"]=$this->input->post("name");
-$data["role_id"]=$this->input->post("role_id");
+$data["role_info_id"]=$this->input->post("role_info_id");
 $data["department_info_id"]=$this->input->post("department_info_id");
 $data["gender"]=$this->input->post("gender");
 $data["birthdate"]=$this->input->post("birthdate");
@@ -92,7 +123,7 @@ $data["contactnumber"]=$this->input->post("contactnumber");
 $data["account"]=$this->input->post("account");
 $data["password"]=$this->input->post("password");
 $data["name"]=$this->input->post("name");
-$data["role_id"]=$this->input->post("role_id");
+$data["role_info_id"]=$this->input->post("role_info_id");
 $data["department_info_id"]=$this->input->post("department_info_id");
 $data["gender"]=$this->input->post("gender");
 $data["birthdate"]=$this->input->post("birthdate");

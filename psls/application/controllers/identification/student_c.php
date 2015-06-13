@@ -26,8 +26,39 @@ class Student_c extends MY_Controller {
 		$page=$this->input->post('page')?$this->input->post('page'):1;
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
-		$count=$this ->student_m->getCount($param);	
-		$this->data['list'] = $this ->student_m->get_list($param,'*',$page_start,$per_page);
+		$field_param='student.id';
+		$metadata=$this ->student_m->getFieldsMetadata();
+		$jointtables=array();
+		for($i=0;$i<sizeof($metadata);$i++){
+		    $field=$metadata[$i];
+			if(strstr($field->name,"_id")){
+			   array_push($jointtables,str_replace("_id","",$field->name));
+			}else{
+			    if($field->name!='id'){
+			    	$field_param.=',student.'.$field->name;
+			    }
+				
+			}
+		}
+		if(sizeof($jointtables)==0){
+			$count=$this ->student_m->getCount($param);	
+			$this->data['list'] = $this ->student_m->get_list($param,'*',$page_start,$per_page);
+		}else{
+		    $jointcondition=array();
+			for($k=0;$k<sizeof($jointtables);$k++){
+			    $leftjoin=array();
+				$table=$jointtables[$k];
+				$alias='t_'.$k;
+				$condition='student.'.$table.'_id='.$alias.'.id';
+				$leftjoin['table']=$table.' '.$alias;
+				$leftjoin['condition']=$condition;
+				$leftjoin['type']='left';
+				array_push($jointcondition,$leftjoin);
+				$field_param.=','.$alias.'.name as '.$table;
+			}
+			$count=$this ->student_m->get_list_count2($jointcondition,$param);	
+			$this->data['list'] = $this ->student_m->get_list2($jointcondition,$param,$field_param,$page_start,$per_page);
+		}
 		$tGrid=array();
 		$tGrid['total']=$count;
 		$tGrid['rows']=$this->data['list'];
@@ -43,10 +74,12 @@ class Student_c extends MY_Controller {
 
 	public function index()
 	{
+		$this->data['dictionary']=$this ->student_m->getDictionary();
 		$this->ci_smarty->view('identification/student_v',$this->data);
 	}
 	
 	public function readonly(){
+		$this->data['dictionary']=$this ->student_m->getDictionary();
 		$this->ci_smarty->view('identification/readonly_student_v',$this->data);
 	}
 	
@@ -55,12 +88,12 @@ class Student_c extends MY_Controller {
 	}
     public function add(){
     	$data=array();
-$data["student_id"]=$this->input->post("student_id");
-$data["name"]=$this->input->post("name");
-$data["department"]=$this->input->post("department");
-$data["class"]=$this->input->post("class");
-$data["attachment"]=$this->input->post("attachment");
-$data["photo"]=$this->input->post("photo");
+if($this->input->post("id")){$data["id"]=$this->input->post("id");}
+if($this->input->post("name")){$data["name"]=$this->input->post("name");}
+if($this->input->post("department")){$data["department"]=$this->input->post("department");}
+if($this->input->post("class")){$data["class"]=$this->input->post("class");}
+if($this->input->post("attachment")){$data["attachment"]=$this->input->post("attachment");}
+if($this->input->post("photo")){$data["photo"]=$this->input->post("photo");}
     	$this ->student_m->add($data);
 
 	}
@@ -84,12 +117,12 @@ $data["photo"]=$this->input->post("photo");
 	
 	public function update($id){
 		$data=array();
-$data["student_id"]=$this->input->post("student_id");
-$data["name"]=$this->input->post("name");
-$data["department"]=$this->input->post("department");
-$data["class"]=$this->input->post("class");
-$data["attachment"]=$this->input->post("attachment");
-$data["photo"]=$this->input->post("photo");
+if($this->input->post("id")){$data["id"]=$this->input->post("id");}
+if($this->input->post("name")){$data["name"]=$this->input->post("name");}
+if($this->input->post("department")){$data["department"]=$this->input->post("department");}
+if($this->input->post("class")){$data["class"]=$this->input->post("class");}
+if($this->input->post("attachment")){$data["attachment"]=$this->input->post("attachment");}
+if($this->input->post("photo")){$data["photo"]=$this->input->post("photo");}
     	$this ->student_m->update($data,$id);
 	}
 	    	 

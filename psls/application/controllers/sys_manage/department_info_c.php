@@ -26,8 +26,39 @@ class Department_info_c extends MY_Controller {
 		$page=$this->input->post('page')?$this->input->post('page'):1;
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
-		$count=$this ->department_info_m->getCount($param);	
-		$this->data['list'] = $this ->department_info_m->get_list($param,'*',$page_start,$per_page);
+		$field_param='department_info.id';
+		$metadata=$this ->department_info_m->getFieldsMetadata();
+		$jointtables=array();
+		for($i=0;$i<sizeof($metadata);$i++){
+		    $field=$metadata[$i];
+			if(strstr($field->name,"_id")){
+			   array_push($jointtables,str_replace("_id","",$field->name));
+			}else{
+			    if($field->name!='id'){
+			    	$field_param.=',department_info.'.$field->name;
+			    }
+				
+			}
+		}
+		if(sizeof($jointtables)==0){
+			$count=$this ->department_info_m->getCount($param);	
+			$this->data['list'] = $this ->department_info_m->get_list($param,'*',$page_start,$per_page);
+		}else{
+		    $jointcondition=array();
+			for($k=0;$k<sizeof($jointtables);$k++){
+			    $leftjoin=array();
+				$table=$jointtables[$k];
+				$alias='t_'.$k;
+				$condition='department_info.'.$table.'_id='.$alias.'.id';
+				$leftjoin['table']=$table.' '.$alias;
+				$leftjoin['condition']=$condition;
+				$leftjoin['type']='left';
+				array_push($jointcondition,$leftjoin);
+				$field_param.=','.$alias.'.name as '.$table;
+			}
+			$count=$this ->department_info_m->get_list_count2($jointcondition,$param);	
+			$this->data['list'] = $this ->department_info_m->get_list2($jointcondition,$param,$field_param,$page_start,$per_page);
+		}
 		$tGrid=array();
 		$tGrid['total']=$count;
 		$tGrid['rows']=$this->data['list'];

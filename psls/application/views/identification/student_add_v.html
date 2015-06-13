@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
      <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+      <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <style type="text/css">
       html,body{
         width:99%;
@@ -27,7 +28,7 @@
 
     var user_id="{*$user->getId()*}";
     var user_name="{*$user->getName()*}";
-    
+ 
     function list(id){
     	var table=$('#'+id).attr('table');
     	var col=$('#'+id).attr('col');
@@ -43,13 +44,26 @@
     	});
     }
     
+    function dictionary(id){
+    	var table=$('#'+id).attr('table');
+    	$.post('/psls/userinterface/userinterface/getEnumList/'+table+"/"+id,function(data){
+    		var json=eval('('+data+')');
+    		var html="";
+    		for(var i=0;i<json.length;i++){
+    			var item=json[i];
+    			html+="<option value='"+item[item['type']]+"'>"+item['name']+"</option>";
+    		}
+    		$('#'+id).html(html);
+    	});
+    }
+    
     $(function() {
      });
     
     function save(){
-var input_student_id= $("#student_id").val();var input_name= $("#name").val();var input_department= $("#department").val();var input_class= $("#class").val();var input_attachment= $("#attachment").val();var input_photo= $("#photo").val();    	var url='/psls/identification/student_c/add';
+var input_id= $("#id").val();var input_name= $("#name").val();var input_department= $("#department").val();var input_class= $("#class").val();var input_attachment= $("#attachment").val();var input_photo= $("#photo").val();    	var url='/psls/identification/student_c/add';
     	$.post(url,{
-student_id:input_student_id,name:input_name,department:input_department,class:input_class,attachment:input_attachment,photo:input_photo,    	},function(data){
+id:input_id,name:input_name,department:input_department,class:input_class,attachment:input_attachment,photo:input_photo,    	},function(data){
 
     	});
     }
@@ -58,7 +72,7 @@ student_id:input_student_id,name:input_name,department:input_department,class:in
 </head>
 <body>
 <table cellpadding=8>
-<tr><td align="right">学号:</td><td><input id='student_id' style='width:200px;' name='student_id' type='text'/></td></tr>
+<tr><td align="right">序号:</td><td><input id='id' style='width:200px;' name='id' type='text'/></td></tr>
 <tr><td align="right">姓名:</td><td><input id='name' style='width:200px;' name='name' type='text'/></td></tr>
 <tr><td align="right">院系:</td><td><input id='department' style='width:200px;' name='department' type='text'/></td></tr>
 <tr><td align="right">班级:</td><td><input id='class' style='width:200px;' name='class' type='text'/></td></tr>

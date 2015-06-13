@@ -124,14 +124,14 @@
 			      		return b.address;
 			      		
 					}},
-					{field:"department_info_id",title:"上级部门",formatter:function(a,b,c){
+					{field:"department_info",title:"上级部门",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
 			      			var v=dictionary["department_info_id"]["dictionary"][ b.department_info_id];
 			      		    if(typeof v !="undefined"){
 			      					return v["name"];
 			      			}
 			      		}
-			      		return b.department_info_id;
+			      		return b.department_info;
 			      		
 					}}
               			,{field:"view",title:"查看",formatter:function(a,b,c){

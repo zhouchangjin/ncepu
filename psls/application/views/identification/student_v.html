@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    
     <style type="text/css">
       html,body{
         width:99%;
@@ -14,7 +16,7 @@
       }
     </style>
     <script>
-
+     var dictionary={*json_encode($dictionary)*};
      function showWindow(){
      	var that=this;
   		while(that!=that.parent){
@@ -72,14 +74,76 @@
            url:'/psls/identification/student_c/grid',
             columns:[
         		    [
-					{field:"id",title:"序号"},
-					{field:"student_id",title:"学号"},
-					{field:"name",title:"姓名"},
-					{field:"department",title:"院系"},
-					{field:"class",title:"班级"},
-					{field:"attachment",title:"证明附件"},
-					{field:"photo",title:"头像"},
-					{field:"cdate",title:"修改日期"}
+					{field:"id",title:"序号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["id"]["dictionary"][ b.id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.id;
+			      		
+					}},
+					{field:"name",title:"姓名",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["name"]["dictionary"][ b.name];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.name;
+			      		
+					}},
+					{field:"department",title:"院系",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["department"]["dictionary"][ b.department];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.department;
+			      		
+					}},
+					{field:"class",title:"班级",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["class"]["dictionary"][ b.class];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.class;
+			      		
+					}},
+					{field:"attachment",title:"证明附件",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["attachment"]["dictionary"][ b.attachment];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.attachment;
+			      		
+					}},
+					{field:"photo",title:"头像",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["photo"]["dictionary"][ b.photo];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.photo;
+			      		
+					}},
+					{field:"cdate",title:"修改日期",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["cdate"]["dictionary"][ b.cdate];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.cdate;
+			      		
+					}}
               			,{field:"view",title:"查看",formatter:function(a,b,c){
               				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
               			}}

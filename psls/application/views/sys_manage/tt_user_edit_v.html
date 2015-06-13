@@ -63,20 +63,20 @@
     }
     
     $(function() {
-list("role_id",function(){
-$('#role_id').attr('value','{*$obj["role_id"]*}');});
+list("role_info_id",function(){
+$('#role_info_id').attr('value','{*$obj["role_info_id"]*}');});
 list("department_info_id",function(){
 $('#department_info_id').attr('value','{*$obj["department_info_id"]*}');});
 dictionary("gender",function(){
 $('#gender').attr('value','{*$obj["gender"]*}');});
-list("status",function(){
+dictionary("status",function(){
 $('#status').attr('value','{*$obj["status"]*}');});
      });
     
     function save(){
-var input_account= $("#account").val();var input_password= $("#password").val();var input_name= $("#name").val();var input_role_id= $("#role_id").val();var input_department_info_id= $("#department_info_id").val();var input_gender= $("#gender").val();var input_birthdate= $("input[name=birthdate]").val();var input_status= $("#status").val();var input_contactnumber= $("#contactnumber").val();    	var url='/psls/sys_manage/tt_user_c/update/'+id;
+var input_account= $("#account").val();var input_password= $("#password").val();var input_name= $("#name").val();var input_role_info_id= $("#role_info_id").val();var input_department_info_id= $("#department_info_id").val();var input_gender= $("#gender").val();var input_birthdate= $("input[name=birthdate]").val();var input_status= $("#status").val();var input_contactnumber= $("#contactnumber").val();    	var url='/psls/sys_manage/tt_user_c/update/'+id;
     	$.post(url,{
-account:input_account,password:input_password,name:input_name,role_id:input_role_id,department_info_id:input_department_info_id,gender:input_gender,birthdate:input_birthdate,status:input_status,contactnumber:input_contactnumber    	},function(data){
+account:input_account,password:input_password,name:input_name,role_info_id:input_role_info_id,department_info_id:input_department_info_id,gender:input_gender,birthdate:input_birthdate,status:input_status,contactnumber:input_contactnumber    	},function(data){
 
     	});
     }
@@ -88,11 +88,11 @@ account:input_account,password:input_password,name:input_name,role_id:input_role
 <tr><td align="right">帐号:</td><td><input id='account' style='width:200px;' name='account' value='{*$obj['account']*}' type='text'/></td></tr>
 <tr><td align="right">密码:</td><td><input id='password' style='width:200px;' name='password' value='{*$obj['password']*}' type='text'/></td></tr>
 <tr><td align="right">姓名:</td><td><input id='name' style='width:200px;' name='name' value='{*$obj['name']*}' type='text'/></td></tr>
-<tr><td align="right">角色:</td><td><select id='role_id' name='role_id' table='role' col='name' idname='id' style='width:200px' ></select></td></tr>
+<tr><td align="right">角色:</td><td><select id='role_info_id' name='role_info_id' table='role_info' col='name' idname='id' style='width:200px' ></select></td></tr>
 <tr><td align="right">所属部门:</td><td><select id='department_info_id' name='department_info_id' table='department_info' col='name' idname='id' style='width:200px' ></select></td></tr>
 <tr><td align="right">性别:</td><td><select id='gender' name='gender' table='tt_user' style='width:200px' ></select></td></tr>
 <tr><td align="right">出生日期:</td><td><input class='easyui-datetimebox'  id='birthdate' style='width:200px' name='birthdate' value='{*$obj['birthdate']*}'/></td></tr>
-<tr><td align="right">状态:</td><td><select id='status' name='status' table='status' col='name' idname='id' style='width:200px' ></select></td></tr>
+<tr><td align="right">状态:</td><td><select id='status' name='status' table='tt_user' style='width:200px' ></select></td></tr>
 <tr><td align="right">联系电话:</td><td><input id='contactnumber' style='width:200px;' name='contactnumber' value='{*$obj['contactnumber']*}' type='text'/></td></tr>
 </table>
 </body>

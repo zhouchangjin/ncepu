@@ -26,8 +26,39 @@ class Role_info_c extends MY_Controller {
 		$page=$this->input->post('page')?$this->input->post('page'):1;
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
-		$count=$this ->role_info_m->getCount($param);	
-		$this->data['list'] = $this ->role_info_m->get_list($param,'*',$page_start,$per_page);
+		$field_param='role_info.id';
+		$metadata=$this ->role_info_m->getFieldsMetadata();
+		$jointtables=array();
+		for($i=0;$i<sizeof($metadata);$i++){
+		    $field=$metadata[$i];
+			if(strstr($field->name,"_id")){
+			   array_push($jointtables,str_replace("_id","",$field->name));
+			}else{
+			    if($field->name!='id'){
+			    	$field_param.=',role_info.'.$field->name;
+			    }
+				
+			}
+		}
+		if(sizeof($jointtables)==0){
+			$count=$this ->role_info_m->getCount($param);	
+			$this->data['list'] = $this ->role_info_m->get_list($param,'*',$page_start,$per_page);
+		}else{
+		    $jointcondition=array();
+			for($k=0;$k<sizeof($jointtables);$k++){
+			    $leftjoin=array();
+				$table=$jointtables[$k];
+				$alias='t_'.$k;
+				$condition='role_info.'.$table.'_id='.$alias.'.id';
+				$leftjoin['table']=$table.' '.$alias;
+				$leftjoin['condition']=$condition;
+				$leftjoin['type']='left';
+				array_push($jointcondition,$leftjoin);
+				$field_param.=','.$alias.'.name as '.$table;
+			}
+			$count=$this ->role_info_m->get_list_count2($jointcondition,$param);	
+			$this->data['list'] = $this ->role_info_m->get_list2($jointcondition,$param,$field_param,$page_start,$per_page);
+		}
 		$tGrid=array();
 		$tGrid['total']=$count;
 		$tGrid['rows']=$this->data['list'];
@@ -43,14 +74,22 @@ class Role_info_c extends MY_Controller {
 
 	public function index()
 	{
+		$this->data['dictionary']=$this ->role_info_m->getDictionary();
 		$this->ci_smarty->view('sys_manage/role_info_v',$this->data);
 	}
+	
+	public function readonly(){
+		$this->data['dictionary']=$this ->role_info_m->getDictionary();
+		$this->ci_smarty->view('sys_manage/readonly_role_info_v',$this->data);
+	}
+	
 	public function query(){
 
 	}
     public function add(){
     	$data=array();
-$data["role_name"]=$this->input->post("role_name");
+$data["name"]=$this->input->post("name");
+$data["status"]=$this->input->post("status");
 $data["role_alias"]=$this->input->post("role_alias");
     	$this ->role_info_m->add($data);
 
@@ -63,21 +102,22 @@ $data["role_alias"]=$this->input->post("role_alias");
 	public function editPage($id){
 	    $this->data['id']=$id;
 	    $param=array();
-	    $param['role_id']=$id;
+	    $param['id']=$id;
 	    $data=$this ->role_info_m->get_one($param);
 	    $this->data['obj']=$data;
 		$this->ci_smarty->view('sys_manage/role_info_edit_v',$this->data);
 	}
 	
 	public function delete($id){
-		 $this ->role_info_m->delete($id,true,'role_id');
+		 $this ->role_info_m->delete($id);
 	}
 	
 	public function update($id){
 		$data=array();
-		$data["role_name"]=$this->input->post("role_name");
-		$data["role_alias"]=$this->input->post("role_alias");
-    	$this ->role_info_m->update($data,$id,'role_id');
+$data["name"]=$this->input->post("name");
+$data["status"]=$this->input->post("status");
+$data["role_alias"]=$this->input->post("role_alias");
+    	$this ->role_info_m->update($data,$id);
 	}
 	    	 
 }
