@@ -8,7 +8,6 @@ class Login extends MY_Controller {
 	    parent::__construct();
 	    $this->load->helper('url');
 	    $this->load->model('sys_manage/user_model');
-	    $this->load->model('sys_manage/picture_m');
 	    $this->load->model('staff_manage/Staff');
 	    $this->load->model('staff_manage/Department');
 	    $this->load->model('staff_manage/Right');
@@ -69,18 +68,18 @@ class Login extends MY_Controller {
 			$this->data['error_msg'] = '1';
 			$this->ci_smarty->view('login',$this->data);
 		}else{
-			$sql="select a.department_id,b.department_name,".
+			$sql="select a.department_info_id,b.name,".
 			"c.role_id,c.role_name,a.id,".
 			"a.name,a.birthdate,a.gender,a.password,a.status,c.role_alias".
 			" from tt_user a,".
 			"department_info b,role_info c".			
-		    " where a.account='".$username."' and a.department_id=b.department_id and a.role_id=c.role_id";
+		    " where a.account='".$username."' and a.department_info_id=b.id and a.role_id=c.role_id";
 		  
 			$userInfo     = $this->user_model-> getQuery($sql);
 			//创建登录用户对象，保存用户信息到session中
 			session_start();
 			$department= new Department();
-			$department->setDepartmentId($userInfo[0]['department_id']);
+			$department->setDepartmentId($userInfo[0]['department_info_id']);
 			$department->setDepartmentName($userInfo[0]['department_name']);
 			$department->setDeptId($userInfo[0]['dept_id']);
 			$department->setDeptName($userInfo[0]['dept_name']);
@@ -517,8 +516,8 @@ class Login extends MY_Controller {
 	public function getUserAjax()
 	{
 
-	 	$department_id =$_POST['department'];
-	 	$sql        = "select * from tt_user where department_id='".$department_id."'";
+	 	$department_info_id =$_POST['department'];
+	 	$sql        = "select * from tt_user where department_info_id='".$department_info_id."'";
 	 	$result     = $this->header_model->getQuery($sql);	
 	 	for($i=0;$i<count($result);$i++){
 	 		 echo "<option value='".$result[$i]['account']."'>".$result[$i]['name']."</option>";

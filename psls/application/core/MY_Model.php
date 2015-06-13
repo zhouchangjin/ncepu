@@ -33,7 +33,7 @@ class MY_Model extends CI_Model
 		$meta=array();
 		foreach ($fields as $field)
 		{
-			$query=$this->db->query("select * from information_schema.columns where table_name='".$this->table_name."' and column_name='".$field->name."'");
+			$query=$this->db->query("select * from information_schema.columns where table_schema='psls' and table_name='".$this->table_name."' and column_name='".$field->name."'");
 			$res=$query->result();
 			$field->comment=$res[0]->COLUMN_COMMENT;
 			$field->dictionary=array();
@@ -54,7 +54,7 @@ class MY_Model extends CI_Model
 		$meta=array();
 		foreach ($fields as $field)
 		{
-			$query=$this->db->query("select * from information_schema.columns where table_name='".$this->table_name."' and column_name='".$field->name."'");
+			$query=$this->db->query("select * from information_schema.columns where table_schema='psls' and table_name='".$this->table_name."' and column_name='".$field->name."'");
 			$res=$query->result();
 			$field->comment=$res[0]->COLUMN_COMMENT;
 			$field->dictionary=0;

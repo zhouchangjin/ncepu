@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
      <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+      <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <style type="text/css">
       html,body{
         width:99%;
@@ -27,7 +28,7 @@
 
     var user_id="{*$user->getId()*}";
     var user_name="{*$user->getName()*}";
-    
+ 
     function list(id){
     	var table=$('#'+id).attr('table');
     	var col=$('#'+id).attr('col');
@@ -43,19 +44,27 @@
     	});
     }
     
+    function dictionary(id){
+    	var table=$('#'+id).attr('table');
+    	$.post('/psls/userinterface/userinterface/getEnumList/'+table+"/"+id,function(data){
+    		var json=eval('('+data+')');
+    		var html="";
+    		for(var i=0;i<json.length;i++){
+    			var item=json[i];
+    			html+="<option value='"+item[item['type']]+"'>"+item['name']+"</option>";
+    		}
+    		$('#'+id).html(html);
+    	});
+    }
+    
     $(function() {
+list("department_info_id");
      });
     
     function save(){
-		var input_department_id= $("#department_id").val();
-		var input_department_name= $("#department_name").val();
-		var input_description= $("#description").val();
-		var url='/psls/sys_manage/department_info_c/add';
+var input_name= $("#name").val();var input_description= $("#description").val();var input_address= $("#address").val();var input_department_info_id= $("#department_info_id").val();    	var url='/psls/sys_manage/department_info_c/add';
     	$.post(url,{
-			department_id:input_department_id,
-			department_name:input_department_name,
-			description:input_description    	
-			},function(data){
+name:input_name,description:input_description,address:input_address,department_info_id:input_department_info_id    	},function(data){
 
     	});
     }
@@ -64,8 +73,10 @@
 </head>
 <body>
 <table cellpadding=8>
-<tr><td align="right">公司名称:</td><td><input id='department_name' style='width:200px;' name='department_name' type='text'/></td></tr>
+<tr><td align="right">部门名称:</td><td><input id='name' style='width:200px;' name='name' type='text'/></td></tr>
 <tr><td align="right">描述:</td><td><textarea id='description' style='width:300px;height:200px' name='description'></textarea></td></tr>
+<tr><td align="right">部门地址:</td><td><input id='address' style='width:200px;' name='address' type='text'/></td></tr>
+<tr><td align="right">上级部门:</td><td><select id='department_info_id' name='department_info_id' table='department_info' col='name' idname='id' style='width:200px' ></select></td></tr>
 </table>
 </body>
 </html>

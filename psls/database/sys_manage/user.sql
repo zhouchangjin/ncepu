@@ -5,12 +5,12 @@ DROP TABLE IF EXISTS `right_info`;
 DROP TABLE IF EXISTS `role_to_right`;
 
 CREATE TABLE `department_info` (
-  `department_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `department_info_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '序号',
   `department_name` varchar(50) DEFAULT NULL COMMENT '公司名称',
   `cdate` timestamp NULL DEFAULT NULL,
   `description` text COMMENT '描述',
   `address` varchar(200) DEFAULT NULL COMMENT '公司地址',
-  PRIMARY KEY (`department_id`)
+  PRIMARY KEY (`department_info_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='部门信息表';
 
 
@@ -35,7 +35,7 @@ CREATE TABLE `tt_user` (
   `password` varchar(64) DEFAULT NULL COMMENT '密码',
   `name` varchar(50) DEFAULT NULL COMMENT '姓名',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色',
-  `department_id` bigint(20) DEFAULT NULL COMMENT '部门',
+  `department_info_id` bigint(20) DEFAULT NULL COMMENT '部门',
   `gender` tinyint(3) DEFAULT '0' COMMENT '性别',
   `birthdate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '出生日期',
   `cdate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建日期',
@@ -44,9 +44,9 @@ CREATE TABLE `tt_user` (
   `contactnumber` varchar(60) DEFAULT NULL COMMENT '联系电话'
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
-  KEY `department_id` (`department_id`),
+  KEY `department_info_id` (`department_info_id`),
   CONSTRAINT `tt_user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role_info` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tt_user_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department_info` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `tt_user_ibfk_2` FOREIGN KEY (`department_info_id`) REFERENCES `department_info` (`department_info_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='用户帐号表';
 
 CREATE TABLE `dept_role` (

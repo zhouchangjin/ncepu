@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    
     <style type="text/css">
       html,body{
         width:99%;
@@ -14,14 +16,14 @@
       }
     </style>
     <script>
-
+     var dictionary={*json_encode($dictionary)*};
      function showWindow(){
      	var that=this;
   		while(that!=that.parent){
       		that=that.parent;
       	}
       	var addUrl='/psls/sys_manage/tt_user_c/addPage';
-      	that.showModal2(addUrl,'注册',saved,{
+      	that.showModal2(addUrl,'新建',saved,{
       	    width:800,
 			height:400
       	});
@@ -56,32 +58,133 @@
      }
      
      function view(id){
-     	alert("定义你的查看功能");
+     	var that=this;
+  		while(that!=that.parent){
+      		that=that.parent;
+      	}
+      	var url='/psls/sys_manage/tt_user_c/detail/'+id;
+      	that.addTab2(url,'这是标题');
      }
      
      $(function() {
         $('#tGrid').datagrid({
-           title:'用户列表',
+           title:'用户帐号表',
            toolbar:'#tb',
            pagination:true,
            url:'/psls/sys_manage/tt_user_c/grid',
             columns:[
         		    [
-						{field:"id",title:""},
-						{field:"account",title:"帐号"},
-						{field:"name",title:"姓名"},
-						{field:"role_name",title:"角色"},
-						{field:"department_name",title:"公司"},
-						{field:"gender",title:"性别",formatter:function(a,b,c){
-							if(b.gender=="1"){
-								return '男';
-							}else{
-								return '女';
-							}
-						}},
-						{field:"birthdate",title:"出生日期"},
-						{field:"contactnumber",title:"联系电话"},
-						{field:"view",title:"查看",formatter:function(a,b,c){
+					{field:"id",title:"序号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["id"]["dictionary"][ b.id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.id;
+			      		
+					}},
+					{field:"account",title:"帐号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["account"]["dictionary"][ b.account];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.account;
+			      		
+					}},
+					{field:"password",title:"密码",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["password"]["dictionary"][ b.password];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.password;
+			      		
+					}},
+					{field:"name",title:"姓名",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["name"]["dictionary"][ b.name];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.name;
+			      		
+					}},
+					{field:"role_id",title:"角色",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["role_id"]["dictionary"][ b.role_id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.role_id;
+			      		
+					}},
+					{field:"department_info_id",title:"所属部门",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["department_info_id"]["dictionary"][ b.department_info_id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.department_info_id;
+			      		
+					}},
+					{field:"gender",title:"性别",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["gender"]["dictionary"][ b.gender];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.gender;
+			      		
+					}},
+					{field:"birthdate",title:"出生日期",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["birthdate"]["dictionary"][ b.birthdate];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.birthdate;
+			      		
+					}},
+					{field:"cdate",title:"创建日期",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["cdate"]["dictionary"][ b.cdate];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.cdate;
+			      		
+					}},
+					{field:"status",title:"状态",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["status"]["dictionary"][ b.status];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.status;
+			      		
+					}},
+					{field:"contactnumber",title:"联系电话",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["contactnumber"]["dictionary"][ b.contactnumber];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.contactnumber;
+			      		
+					}}
+              			,{field:"view",title:"查看",formatter:function(a,b,c){
               				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
               			}}
               			,{field:"edit",title:"编辑",formatter:function(a,b,c){
@@ -105,7 +208,7 @@
     </style>
 </head>
 <body >
-     <table id="tGrid" style="width:900px">
+     <table id="tGrid" style="width:800px">
      </table>
      
           

@@ -26,49 +26,32 @@ class Tt_user_c extends MY_Controller {
 		$page=$this->input->post('page')?$this->input->post('page'):1;
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
-		if($this->input->post('company_id')){
-			$param['tt_user.department_id']=$this->input->post('company_id');
-		}
-		if($this->input->post('role_id')){
-			$param['tt_user.role_id']=$this->input->post('role_id');
-		}
-		if($this->input->post('dept_id')){
-			$param['tt_user.dept_id']=$this->input->post('dept_id');
-		}
-		if($this->input->post('powerunit_id')){
-			$param['tt_user.powerunit_id']=$this->input->post('powerunit_id');
-		}
-		
-		$fields="tt_user.id,tt_user.account,tt_user.name,tt_user.role_id,tt_user.department_id,tt_user.gender"
-				.",tt_user.birthdate,tt_user.contactnumber,role_info.role_name,department_info.department_name";
-		$jointcondition=array();
-		$condition1=array();
-		$condition1['table']="role_info";
-		$condition1['condition']="role_info.role_id=tt_user.role_id";
-		$condition1['type']='left';
-		$condition2=array();
-		$condition2['table']="department_info";
-		$condition2['condition']="department_info.department_id=tt_user.department_id";
-		$condition2['type']='left';
-		array_push($jointcondition, $condition1);
-		array_push($jointcondition, $condition2);
-		$count=$this ->tt_user_m->get_list_count2($jointcondition,$param);	
-		$this->data['list'] = $this ->tt_user_m->get_list2($jointcondition,$param,$fields,$page_start,$per_page);
+		$count=$this ->tt_user_m->getCount($param);	
+		$this->data['list'] = $this ->tt_user_m->get_list($param,'*',$page_start,$per_page);
 		$tGrid=array();
 		$tGrid['total']=$count;
 		$tGrid['rows']=$this->data['list'];
 	    echo json_encode($tGrid);
 	}
 
-	public function detail()
-	{
-
+	public function detail($id){
+		$param=array();
+		$param['id']=$id;
+		$this->data['obj']=$this->tt_user_m->getOne($param);
+		$this->ci_smarty->view('sys_manage/tt_user_detail_v',$this->data);
 	}
 
 	public function index()
 	{
+		$this->data['dictionary']=$this ->tt_user_m->getDictionary();
 		$this->ci_smarty->view('sys_manage/tt_user_v',$this->data);
 	}
+	
+	public function readonly(){
+		$this->data['dictionary']=$this ->tt_user_m->getDictionary();
+		$this->ci_smarty->view('sys_manage/readonly_tt_user_v',$this->data);
+	}
+	
 	public function query(){
 
 	}
@@ -78,10 +61,9 @@ $data["account"]=$this->input->post("account");
 $data["password"]=$this->input->post("password");
 $data["name"]=$this->input->post("name");
 $data["role_id"]=$this->input->post("role_id");
-$data["department_id"]=$this->input->post("department_id");
+$data["department_info_id"]=$this->input->post("department_info_id");
 $data["gender"]=$this->input->post("gender");
 $data["birthdate"]=$this->input->post("birthdate");
-$data["edate"]=$this->input->post("edate");
 $data["status"]=$this->input->post("status");
 $data["contactnumber"]=$this->input->post("contactnumber");
     	$this ->tt_user_m->add($data);
@@ -104,30 +86,18 @@ $data["contactnumber"]=$this->input->post("contactnumber");
 	public function delete($id){
 		 $this ->tt_user_m->delete($id);
 	}
-	public function deassign(){
-		$id=$this->input->post('id');
-		$data['dept_id']=NULL;
-		$this->tt_user_m->update($data,$id);
-	}
 	
-	public function removeFromPSU(){
-		$id=$this->input->post('id');
-		$data['powerunit_id']=NULL;
-		$this->tt_user_m->update($data,$id);
-	}
-
 	public function update($id){
 		$data=array();
-	$data["account"]=$this->input->post("account");
-	$data["password"]=$this->input->post("password");
-	$data["name"]=$this->input->post("name");
-	$data["role_id"]=$this->input->post("role_id");
-	$data["department_id"]=$this->input->post("department_id");
-	$data["gender"]=$this->input->post("gender");
-	$data["birthdate"]=$this->input->post("birthdate");
-	$data["edate"]=$this->input->post("edate");
-	$data["status"]=$this->input->post("status");
-	$data["contactnumber"]=$this->input->post("contactnumber");
+$data["account"]=$this->input->post("account");
+$data["password"]=$this->input->post("password");
+$data["name"]=$this->input->post("name");
+$data["role_id"]=$this->input->post("role_id");
+$data["department_info_id"]=$this->input->post("department_info_id");
+$data["gender"]=$this->input->post("gender");
+$data["birthdate"]=$this->input->post("birthdate");
+$data["status"]=$this->input->post("status");
+$data["contactnumber"]=$this->input->post("contactnumber");
     	$this ->tt_user_m->update($data,$id);
 	}
 	    	 

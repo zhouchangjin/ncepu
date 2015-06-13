@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/psls/ui/bootstrap/css/bootstrap_comp.css">
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
+     <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    
     <style type="text/css">
       html,body{
         width:99%;
@@ -14,7 +16,7 @@
       }
     </style>
     <script>
-
+     var dictionary={*json_encode($dictionary)*};
      function showWindow(){
      	var that=this;
   		while(that!=that.parent){
@@ -55,34 +57,91 @@
      
      }
      
-     function view(id,name){
+     function view(id){
      	var that=this;
   		while(that!=that.parent){
       		that=that.parent;
       	}
       	var url='/psls/sys_manage/department_info_c/detail/'+id;
-      	that.addTab2(url,name);
+      	that.addTab2(url,'这是标题');
      }
      
      $(function() {
         $('#tGrid').datagrid({
-           title:'公司列表',
+           title:'部门信息表',
            toolbar:'#tb',
            pagination:true,
            url:'/psls/sys_manage/department_info_c/grid',
             columns:[
         		    [
-					{field:"department_id",title:"序号"},
-					{field:"department_name",title:"公司名称"},
-					{field:"description",title:"描述"}
+					{field:"id",title:"序号",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["id"]["dictionary"][ b.id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.id;
+			      		
+					}},
+					{field:"name",title:"部门名称",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["name"]["dictionary"][ b.name];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.name;
+			      		
+					}},
+					{field:"cdate",title:"编辑时间",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["cdate"]["dictionary"][ b.cdate];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.cdate;
+			      		
+					}},
+					{field:"description",title:"描述",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["description"]["dictionary"][ b.description];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.description;
+			      		
+					}},
+					{field:"address",title:"部门地址",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["address"]["dictionary"][ b.address];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.address;
+			      		
+					}},
+					{field:"department_info_id",title:"上级部门",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["department_info_id"]["dictionary"][ b.department_info_id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.department_info_id;
+			      		
+					}}
               			,{field:"view",title:"查看",formatter:function(a,b,c){
-              				return '<button class="dd btn-primary ddd" onclick="view(\''+b.department_id+'\',\''+b.department_name+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+              				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
               			}}
               			,{field:"edit",title:"编辑",formatter:function(a,b,c){
-              				return '<button class="dd btn-primary ddd" onclick="edit(\''+b.department_id+'\')"><span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑</button>';
+              				return '<button class="dd btn-primary ddd" onclick="edit(\''+b.id+'\')"><span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑</button>';
               			}}
               			,{field:"del",title:"删除",formatter:function(a,b,c){
-              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.department_id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
+              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
               			}}
    		         	]
 	         		]

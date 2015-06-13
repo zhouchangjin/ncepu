@@ -50,13 +50,13 @@
 		var input_role_id= $("#role_id").val();
 		var input_role_name= $("#role_name").val();
 		var input_status= $("#status").val();
-		var input_department_id= $("#department_id").val();
+		var input_department_info_id= $("#department_info_id").val();
 		var input_role_alias= $("#role_alias").val();
 		var url='/psls/sys_manage/role_info_c/add';
     	$.post(url,{
 			role_name:input_role_name,
 			status:input_status,
-			department_id:input_department_id,
+			department_info_id:input_department_info_id,
 			role_alias:input_role_alias    	
 		},function(data){
 
