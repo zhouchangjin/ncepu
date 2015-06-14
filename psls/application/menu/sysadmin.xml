@@ -8,7 +8,11 @@
 	<Module title="机构管理">
 		<Item item="department_info_c" module="sys_manage" id="21" title="部门管理">
 		</Item>
-		<Item item="role_info_c" module="sys_manage" id="23" title="角色管理">
+		<Item item="role_info_c" module="sys_manage" id="22" title="角色管理">
+		</Item>
+		<Item item="dept_c" module="sys_manage" id="23" title="院系管理">
+		</Item>
+		<Item item="class_c" module="sys_manage" id="24" title="班级管理">
 		</Item>
 	</Module>
 	<Module title="信息发布">

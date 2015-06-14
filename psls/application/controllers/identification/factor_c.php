@@ -88,20 +88,20 @@ class Factor_c extends MY_Controller {
 	}
     public function add(){
     	$data=array();
-$data["student_id"]=$this->input->post("student_id");
-$data["children_count"]=$this->input->post("children_count");
-$data["labor_ratio"]=$this->input->post("labor_ratio");
-$data["health_expense"]=$this->input->post("health_expense");
-$data["disasters"]=$this->input->post("disasters");
-$data["event"]=$this->input->post("event");
-$data["martyr"]=$this->input->post("martyr");
-$data["poor_district"]=$this->input->post("poor_district");
-$data["average_income"]=$this->input->post("average_income");
-$data["orphan"]=$this->input->post("orphan");
-$data["disabled"]=$this->input->post("disabled");
-$data["expense"]=$this->input->post("expense");
-$data["application_level"]=$this->input->post("application_level");
-$data["application_date"]=$this->input->post("application_date");
+if($this->input->post("student_id")){$data["student_id"]=$this->input->post("student_id");}
+if($this->input->post("children_count")){$data["children_count"]=$this->input->post("children_count");}
+if($this->input->post("labor_ratio")){$data["labor_ratio"]=$this->input->post("labor_ratio");}
+if($this->input->post("health_expense")){$data["health_expense"]=$this->input->post("health_expense");}
+if($this->input->post("disasters")){$data["disasters"]=$this->input->post("disasters");}
+if($this->input->post("event")){$data["event"]=$this->input->post("event");}
+if($this->input->post("martyr")){$data["martyr"]=$this->input->post("martyr");}
+if($this->input->post("poor_district")){$data["poor_district"]=$this->input->post("poor_district");}
+if($this->input->post("average_income")){$data["average_income"]=$this->input->post("average_income");}
+if($this->input->post("orphan")){$data["orphan"]=$this->input->post("orphan");}
+if($this->input->post("disabled")){$data["disabled"]=$this->input->post("disabled");}
+if($this->input->post("expense")){$data["expense"]=$this->input->post("expense");}
+if($this->input->post("application_level")){$data["application_level"]=$this->input->post("application_level");}
+if($this->input->post("application_date")){$data["application_date"]=$this->input->post("application_date");}
     	$this ->factor_m->add($data);
 
 	}
@@ -125,20 +125,20 @@ $data["application_date"]=$this->input->post("application_date");
 	
 	public function update($id){
 		$data=array();
-$data["student_id"]=$this->input->post("student_id");
-$data["children_count"]=$this->input->post("children_count");
-$data["labor_ratio"]=$this->input->post("labor_ratio");
-$data["health_expense"]=$this->input->post("health_expense");
-$data["disasters"]=$this->input->post("disasters");
-$data["event"]=$this->input->post("event");
-$data["martyr"]=$this->input->post("martyr");
-$data["poor_district"]=$this->input->post("poor_district");
-$data["average_income"]=$this->input->post("average_income");
-$data["orphan"]=$this->input->post("orphan");
-$data["disabled"]=$this->input->post("disabled");
-$data["expense"]=$this->input->post("expense");
-$data["application_level"]=$this->input->post("application_level");
-$data["application_date"]=$this->input->post("application_date");
+if($this->input->post("student_id")){$data["student_id"]=$this->input->post("student_id");}
+if($this->input->post("children_count")){$data["children_count"]=$this->input->post("children_count");}
+if($this->input->post("labor_ratio")){$data["labor_ratio"]=$this->input->post("labor_ratio");}
+if($this->input->post("health_expense")){$data["health_expense"]=$this->input->post("health_expense");}
+if($this->input->post("disasters")){$data["disasters"]=$this->input->post("disasters");}
+if($this->input->post("event")){$data["event"]=$this->input->post("event");}
+if($this->input->post("martyr")){$data["martyr"]=$this->input->post("martyr");}
+if($this->input->post("poor_district")){$data["poor_district"]=$this->input->post("poor_district");}
+if($this->input->post("average_income")){$data["average_income"]=$this->input->post("average_income");}
+if($this->input->post("orphan")){$data["orphan"]=$this->input->post("orphan");}
+if($this->input->post("disabled")){$data["disabled"]=$this->input->post("disabled");}
+if($this->input->post("expense")){$data["expense"]=$this->input->post("expense");}
+if($this->input->post("application_level")){$data["application_level"]=$this->input->post("application_level");}
+if($this->input->post("application_date")){$data["application_date"]=$this->input->post("application_date");}
     	$this ->factor_m->update($data,$id);
 	}
 	    	 

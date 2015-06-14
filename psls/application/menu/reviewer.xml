@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menu xmlns="http://www.example.org/menu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/menu menu.xsd ">
+	<Module title="学生信息管理">
+		<Item id="11" item="student_c/readonly" module="identification" title="学生信息" />
+	</Module>
 	<Module title="贫困生认定">
-		<Item id="11" item="factor_c/readonly" module="identification" title="贫困生申请信息" />
+		<Item id="21" item="factor_c/readonly" module="identification" title="贫困生申请信息" />
 	</Module>
 </Menu>

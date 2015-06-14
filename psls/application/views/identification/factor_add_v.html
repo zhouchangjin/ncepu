@@ -58,6 +58,7 @@
     }
     
     $(function() {
+list("student_id");
 dictionary("health_expense");
 dictionary("disasters");
 dictionary("event");
@@ -80,7 +81,7 @@ student_id:input_student_id,children_count:input_children_count,labor_ratio:inpu
 </head>
 <body>
 <table cellpadding=8>
-<tr><td align="right">学号:</td><td><input id='student_id' style='width:200px;' name='student_id' type='text'/></td></tr>
+<tr><td align="right">学号:</td><td><select id='student_id' name='student_id' table='student' col='name' idname='id' style='width:200px' ></select></td></tr>
 <tr><td align="right">受教育子女数:</td><td><input class='easyui-numberspinner' data-options='increment:1' id='children_count' style='width:200px' name='children_count'/></td></tr>
 <tr><td align="right">劳动力人口比:</td><td><input id='labor_ratio' style='width:200px;' name='labor_ratio' type='text'/></td></tr>
 <tr><td align="right">家人患重病:</td><td><select id='health_expense' name='health_expense' table='factor' style='width:200px' ></select></td></tr>

@@ -267,6 +267,8 @@ class Template_c extends MY_Controller {
 				if($dictionary==0){
 					if($type=="bigint"){
 						$typeStr="<select id='".$field->name."' name='".$field->name."' table='".str_replace("_id","",$field->name)."' col='name' idname='id' style='width:200px' ></select>";
+					}else if(strstr($field->name,"_id")){
+						$typeStr="<select id='".$field->name."' name='".$field->name."' table='".str_replace("_id","",$field->name)."' col='name' idname='id' style='width:200px' ></select>";
 					}else if($type=="varchar"){
 						$typeStr="<input id='".$field->name."' style='width:200px;' name='".$field->name."' type='text'/>";
 					}else if($type=="tinytext" || $type=="text"){
@@ -407,6 +409,9 @@ class Template_c extends MY_Controller {
 						continue;
 					}
 					if($field->type=="bigint"){
+						$tmpLine.='list("'.$field->name.'");';
+						$tmpLine.=chr(0x0A);
+					}else if(strstr($field->name,'_id')){
 						$tmpLine.='list("'.$field->name.'");';
 						$tmpLine.=chr(0x0A);
 					}

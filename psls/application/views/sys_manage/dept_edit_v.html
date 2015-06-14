@@ -8,10 +8,21 @@
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="/psls/ui/jquery-easyui/jquery.easyui.min.js"></script>
      <script type="text/javascript" src="/psls/ui/jquery-easyui/plugins/jquery.tooltip.js"></script>
+    <script type="text/javascript" src="/psls/ui/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+   
     <style type="text/css">
       html,body{
         width:99%;
         height: 98%;
+      }
+      td{
+      	border-bottom:1px solid lightgrey;
+      	border-right:1px solid lightgrey;
+      	font-weight:bold;
+      }
+      table{
+      	width:95%;
+      	border:dotted 1px rgb(242,117,4)
       }
     </style>
     <script>
@@ -19,18 +30,45 @@
     var user_id="{*$user->getId()*}";
     var user_name="{*$user->getName()*}";
     var id="{*$id*}";
+    
+    function dictionary(id,setmethod){
+    	var table=$('#'+id).attr('table');
+    	$.post('/psls/userinterface/userinterface/getEnumList/'+table+"/"+id,function(data){
+    		var json=eval('('+data+')');
+    		var html="";
+    		for(var i=0;i<json.length;i++){
+    			var item=json[i];
+    			html+="<option value='"+item[item['type']]+"'>"+item['name']+"</option>";
+    		}
+    		$('#'+id).html(html);
+    		setmethod();
+    	});
+    	
+    }
+    
+    function list(id,setmethod){
+    	var table=$('#'+id).attr('table');
+    	var col=$('#'+id).attr('col');
+    	var colid=$('#'+id).attr('idname');
+    	$.post('/psls/userinterface/userinterface/getList/'+table+"/"+col+"/"+colid,function(data){
+    		var json=eval('('+data+')');
+    		var html="";
+    		for(var i=0;i<json.length;i++){
+    			var item=json[i];
+    			html+="<option value='"+item[colid]+"'>"+item[col]+"</option>";
+    		}
+    		$('#'+id).html(html);
+    		setmethod();
+    	});
+    }
+    
     $(function() {
-          
      });
     
     function save(){
-		var input_name= $("#name").val();
-		var input_description= $("#description").val();   
-		var url='/psls/sys_manage/dept_c/update/'+id;
+var input_name= $("#name").val();var input_description= $("#description").val();    	var url='/psls/sys_manage/dept_c/update/'+id;
     	$.post(url,{
-			name:input_name,
-			description:input_description    	
-		},function(data){
+name:input_name,description:input_description,    	},function(data){
 
     	});
     }
@@ -39,8 +77,8 @@
 </head>
 <body>
 <table cellpadding=8>
-<tr><td align="right">部门名称:</td><td><input id='name' style='width:300px;' name='name' value='{*$obj['name']*}' type='text'/></td></tr>
-<tr><td align="right">部门描述:</td><td><textarea id='description' style='width:300px;height:200px' name='description'>{*$obj['description']*}</textarea></td></tr>
+<tr><td align="right">院系名称:</td><td><input id='name' style='width:200px;' name='name' value='{*$obj['name']*}' type='text'/></td></tr>
+<tr><td align="right">描述:</td><td><textarea id='description' style='width:300px;height:200px' name='description'>{*$obj['description']*}</textarea></td></tr>
 </table>
 </body>
 </html>
