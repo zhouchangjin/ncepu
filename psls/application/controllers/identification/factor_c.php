@@ -7,6 +7,7 @@ class Factor_c extends MY_Controller {
 	    $this->load->helper('url');
 	    $this->load->library('session');
 	    $this->load->model('identification/factor_m');
+	    $this->load->model('identification/student_m');
 		session_start();
 	    header("Cache-control: private");
 	    $this->load->model('staff_manage/Staff');
@@ -18,12 +19,43 @@ class Factor_c extends MY_Controller {
 	    $this->data['user']      =   $this->user;
 
 	}
+	
+	public function temp(){
+		
+		for($i=0;$i<30;$i++){
+			$id=1132227210+$i;
+			$stu=array();
+			$stu["id"]=''.$id;
+			$stu["name"]='test'.$i;
+			$stu['class']='控计1319';
+			$this ->student_m->add($stu);
+			$data=array();
+			$data["student_id"]=''.$id;
+			$data["children_count"]=mt_rand(0, 10);
+			$data["labor_ratio"]=mt_rand(0, 1);
+			$data["health_expense"]=mt_rand(0, 2);
+			$data["disasters"]=mt_rand(0, 2);
+			$data["event"]=mt_rand(0, 2);
+			$data["martyr"]=mt_rand(0, 2);
+			$data["poor_district"]=mt_rand(0, 1);
+			$data["average_income"]=mt_rand(0, 10000);
+			$data["orphan"]=mt_rand(0,1);
+			$data["disabled"]=mt_rand(0, 1);
+			$data["expense"]=mt_rand(0, 1000);
+			$data["application_level"]='A';
+			$this ->factor_m->add($data);
+		}
+	}
 
 	public function grid(){
 		$param = array();
 		$like = array();
 		$rows=$this->input->post('rows')?$this->input->post('rows'):10;
 		$page=$this->input->post('page')?$this->input->post('page'):1;
+		$className=$this->input->post('class_name');
+		if($className){
+			$param['class']=$className;
+		}
 		$page_start = $rows*($page-1);
 		$per_page = $rows;
 		$field_param='factor.id';
