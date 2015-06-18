@@ -3,8 +3,10 @@
 	xsi:schemaLocation="http://www.example.org/menu menu.xsd ">
 	<Module title="学生信息管理">
 		<Item id="11" item="student_c/readonly" module="identification" title="学生信息" />
+		<Item id="12" item="student_c" module="identification" title="管理学生信息" />
 	</Module>
 	<Module title="贫困生认定">
 		<Item id="21" item="factor_c/readonly" module="identification" title="贫困生申请信息" />
+		<Item id="22" item="factor_c" module="identification" title="申请信息录入" />
 	</Module>
 </Menu>

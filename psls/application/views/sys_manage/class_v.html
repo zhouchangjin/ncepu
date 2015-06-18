@@ -22,7 +22,7 @@
   		while(that!=that.parent){
       		that=that.parent;
       	}
-      	var addUrl='/psls/sys_manage/dept_c/addPage';
+      	var addUrl='/psls/sys_manage/class_c/addPage';
       	that.showModal2(addUrl,'新建',saved,{
       	    width:800,
 			height:400
@@ -37,7 +37,7 @@
   		while(that!=that.parent){
       		that=that.parent;
       	}
-      	var url='/psls/sys_manage/dept_c/editPage/'+id;
+      	var url='/psls/sys_manage/class_c/editPage/'+id;
       	that.showModal2(url,'编辑',saved,{
       	    width:800,
 			height:400
@@ -48,7 +48,7 @@
      
      	$.messager.confirm('删除', '确定删除?', function(r){
 			if (r){
-				 var url='/psls/sys_manage/dept_c/delete/'+id;
+				 var url='/psls/sys_manage/class_c/delete/'+id;
 				 $.post(url,{id:id},function(data){
 					 $('#tGrid').datagrid('reload');
 				 });
@@ -62,19 +62,19 @@
   		while(that!=that.parent){
       		that=that.parent;
       	}
-      	var url='/psls/sys_manage/dept_c/detail/'+id;
+      	var url='/psls/sys_manage/class_c/detail/'+id;
       	that.addTab2(url,'这是标题');
      }
      
      $(function() {
         $('#tGrid').datagrid({
-           title:'院系',
+           title:'',
            toolbar:'#tb',
            pagination:true,
-           url:'/psls/sys_manage/dept_c/grid',
+           url:'/psls/sys_manage/class_c/grid',
             columns:[
         		    [
-					{field:"id",title:"院系id",formatter:function(a,b,c){
+					{field:"id",title:"序号",formatter:function(a,b,c){
 			      		if(typeof dictionary !="undefined"){
 			      			var v=dictionary["id"]["dictionary"][ b.id];
 			      		    if(typeof v !="undefined"){
@@ -82,26 +82,6 @@
 			      			}
 			      		}
 			      		return b.id;
-			      		
-					}},
-					{field:"name",title:"院系名称",formatter:function(a,b,c){
-			      		if(typeof dictionary !="undefined"){
-			      			var v=dictionary["name"]["dictionary"][ b.name];
-			      		    if(typeof v !="undefined"){
-			      					return v["name"];
-			      			}
-			      		}
-			      		return b.name;
-			      		
-					}},
-					{field:"description",title:"描述",formatter:function(a,b,c){
-			      		if(typeof dictionary !="undefined"){
-			      			var v=dictionary["description"]["dictionary"][ b.description];
-			      		    if(typeof v !="undefined"){
-			      					return v["name"];
-			      			}
-			      		}
-			      		return b.description;
 			      		
 					}},
 					{field:"cdate",title:"修改日期",formatter:function(a,b,c){
@@ -112,6 +92,26 @@
 			      			}
 			      		}
 			      		return b.cdate;
+			      		
+					}},
+					{field:"name",title:"班级",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["name"]["dictionary"][ b.name];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.name;
+			      		
+					}},
+					{field:"dept",title:"院系",formatter:function(a,b,c){
+			      		if(typeof dictionary !="undefined"){
+			      			var v=dictionary["dept_id"]["dictionary"][ b.dept_id];
+			      		    if(typeof v !="undefined"){
+			      					return v["name"];
+			      			}
+			      		}
+			      		return b.dept;
 			      		
 					}}
               			,{field:"view",title:"查看",formatter:function(a,b,c){

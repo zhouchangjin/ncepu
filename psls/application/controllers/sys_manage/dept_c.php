@@ -117,6 +117,42 @@ if($this->input->post("name")){$data["name"]=$this->input->post("name");}
 if($this->input->post("description")){$data["description"]=$this->input->post("description");}
     	$this ->dept_m->update($data,$id);
 	}
+	
+	public function org(){
+		$list=array();
+		$nodeid=$this->input->post("id");
+		if($nodeid==""){
+			$treeNode=array();
+			$treeNode['id']='root';
+			$treeNode['text']="华北电力大学";
+			$treeNode['children']=array();
+			$treeNode['state']="closed";
+			array_push($list, $treeNode);
+		}else if($nodeid=="root"){
+			$res=$this ->dept_m->getQuery('select * from dept');
+			for($i=0;$i<sizeof($res);$i++){
+				$treeNode=array();
+				$record=$res[$i];
+				$treeNode['id']=$record['id'];
+				$treeNode['text']=$record['name'];
+				$treeNode['children']=array();
+				$treeNode['state']="closed";
+				array_push($list, $treeNode);
+			}
+		}else if(sizeof(explode("_", $nodeid))==1){
+		$res=$this ->dept_m->getQuery('select * from class where dept_id="'.$nodeid.'"');
+			for($i=0;$i<sizeof($res);$i++){
+				$treeNode=array();
+				$record=$res[$i];
+				$treeNode['id']=$nodeid."_".$record['id'];
+				$treeNode['text']=$record['name'];
+				$treeNode['children']=array();
+				$treeNode['state']="closed";
+				array_push($list, $treeNode);
+			}
+		}
+		echo json_encode($list);
+	}
 	    	 
 }
 

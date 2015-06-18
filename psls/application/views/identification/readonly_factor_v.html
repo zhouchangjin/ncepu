@@ -25,8 +25,198 @@
       	var url='/psls/identification/factor_c/detail/'+id;
       	that.addTab2(url,'这是标题');
      }
+     function switch_table(e){
+    	 showIdf(e);
+     }
      
+     function showIdf(e){
+    	  $('#tGrid').datagrid({
+    		  toolbar:'#tb',
+              title:'认定因素',
+              pagination:true,
+              url:'/psls/identification/factor_c/grid',
+              queryParams:{
+ 	        	   class_name:e.text
+ 	           },
+               columns:[
+           		    [
+   					{field:"id",title:"序号",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["id"]["dictionary"][ b.id];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.id;
+   			      		
+   					}},
+   					{field:"student",title:"学号",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["student_id"]["dictionary"][ b.student_id];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.student;
+   			      		
+   					}},
+   					{field:"children_count",title:"受教育子女数",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["children_count"]["dictionary"][ b.children_count];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.children_count;
+   			      		
+   					}},
+   					{field:"labor_ratio",title:"劳动力人口比",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["labor_ratio"]["dictionary"][ b.labor_ratio];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.labor_ratio;
+   			      		
+   					}},
+   					{field:"health_expense",title:"家人患重病",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["health_expense"]["dictionary"][ b.health_expense];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.health_expense;
+   			      		
+   					}},
+   					{field:"disasters",title:"自然灾害",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["disasters"]["dictionary"][ b.disasters];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.disasters;
+   			      		
+   					}},
+   					{field:"event",title:"突发事件",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["event"]["dictionary"][ b.event];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.event;
+   			      		
+   					}},
+   					{field:"martyr",title:"烈士子女",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["martyr"]["dictionary"][ b.martyr];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.martyr;
+   			      		
+   					}},
+   					{field:"poor_district",title:"老少边穷",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["poor_district"]["dictionary"][ b.poor_district];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.poor_district;
+   			      		
+   					}},
+   					{field:"average_income",title:"人均收入",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["average_income"]["dictionary"][ b.average_income];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.average_income;
+   			      		
+   					}},
+   					{field:"orphan",title:"事实孤儿",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["orphan"]["dictionary"][ b.orphan];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.orphan;
+   			      		
+   					}},
+   					{field:"disabled",title:"残疾",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["disabled"]["dictionary"][ b.disabled];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.disabled;
+   			      		
+   					}},
+   					{field:"expense",title:"月消费数据",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["expense"]["dictionary"][ b.expense];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.expense;
+   			      		
+   					}},
+   					{field:"application_level",title:"申请等级",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["application_level"]["dictionary"][ b.application_level];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.application_level;
+   			      		
+   					}},
+   					{field:"application_date",title:"申请日期",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["application_date"]["dictionary"][ b.application_date];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.application_date;
+   			      		
+   					}},
+   					{field:"cdate",title:"修改日期",formatter:function(a,b,c){
+   			      		if(typeof dictionary !="undefined"){
+   			      			var v=dictionary["cdate"]["dictionary"][ b.cdate];
+   			      		    if(typeof v !="undefined"){
+   			      					return v["name"];
+   			      			}
+   			      		}
+   			      		return b.cdate;
+   			      		
+   					}}
+                 			,{field:"view",title:"查看",formatter:function(a,b,c){
+                 				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
+                 			}}
+      		         	]
+   	         		]
+           });
+     }
      $(function() {
+    	 $('#org').tree({
+ 			url:"/psls/sys_manage/dept_c/org/",
+ 			animate:true,
+ 			lines:true,
+ 			onClick:function(e){
+ 				switch_table(e);
+ 			}
+ 		});
+    	 
         $('#tGrid').datagrid({
            title:'认定因素',
            pagination:true,
@@ -220,9 +410,15 @@
     
 </div> 
 <div data-options="region:'center'">
- <table id="tGrid" style="width:800px;height:500px">
+ <table id="tGrid" style="width:1000px;height:500px">
  </table>
 </div>  
 </div>
+<div id="tb" style="padding:5px;height:auto">
+<div style="margin-bottom:5px">
+<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow()">模型认定</a>
+</div>
+</div>
+  
 </body>
 </html>

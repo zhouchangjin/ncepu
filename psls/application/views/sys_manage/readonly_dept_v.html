@@ -16,47 +16,7 @@
       }
     </style>
     <script>
-     var dictionary={*json_encode($dictionary)*};
-     function showWindow(){
-     	var that=this;
-  		while(that!=that.parent){
-      		that=that.parent;
-      	}
-      	var addUrl='/psls/sys_manage/dept_c/addPage';
-      	that.showModal2(addUrl,'新建',saved,{
-      	    width:800,
-			height:400
-      	});
-     }
-      function saved(){
-    	 $('#tGrid').datagrid('reload');
-     }
-     
-     function edit(id){
-     	var that=this;
-  		while(that!=that.parent){
-      		that=that.parent;
-      	}
-      	var url='/psls/sys_manage/dept_c/editPage/'+id;
-      	that.showModal2(url,'编辑',saved,{
-      	    width:800,
-			height:400
-      	});
-     }
-     
-     function del(id){
-     
-     	$.messager.confirm('删除', '确定删除?', function(r){
-			if (r){
-				 var url='/psls/sys_manage/dept_c/delete/'+id;
-				 $.post(url,{id:id},function(data){
-					 $('#tGrid').datagrid('reload');
-				 });
-			}
-		});
-     
-     }
-     
+    var dictionary={*json_encode($dictionary)*};
      function view(id){
      	var that=this;
   		while(that!=that.parent){
@@ -69,7 +29,6 @@
      $(function() {
         $('#tGrid').datagrid({
            title:'院系',
-           toolbar:'#tb',
            pagination:true,
            url:'/psls/sys_manage/dept_c/grid',
             columns:[
@@ -117,12 +76,6 @@
               			,{field:"view",title:"查看",formatter:function(a,b,c){
               				return '<button class="dd btn-primary ddd" onclick="view(\''+b.id+'\')"><span class="glyphicon glyphicon-book"></span>&nbsp;查看</button>';
               			}}
-              			,{field:"edit",title:"编辑",formatter:function(a,b,c){
-              				return '<button class="dd btn-primary ddd" onclick="edit(\''+b.id+'\')"><span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑</button>';
-              			}}
-              			,{field:"del",title:"删除",formatter:function(a,b,c){
-              				return '<button class="dd btn-primary ddd" onclick="del(\''+b.id+'\')"><span class="glyphicon glyphicon-trash"></span>&nbsp;删除</button>';
-              			}}
    		         	]
 	         		]
         });
@@ -140,13 +93,5 @@
 <body >
      <table id="tGrid" style="width:800px">
      </table>
-     
-          
-<div id="tb" style="padding:5px;height:auto">
-<div style="margin-bottom:5px">
-<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow()">新建</a>
-</div>
-</div>
-  
 </body>
 </html>
